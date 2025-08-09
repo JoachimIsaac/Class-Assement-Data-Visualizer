@@ -1,0 +1,3 @@
+[submodule "visualization-practice-api"]
+	path = visualization-practice-api
+	url = https://github.com/JoachimIsaac/visualization-practice-api.git

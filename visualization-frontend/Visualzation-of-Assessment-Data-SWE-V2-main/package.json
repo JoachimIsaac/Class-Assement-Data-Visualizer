@@ -1,0 +1,20 @@
+{
+  "name": "visualization-project-vite",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "jest",
+    "slo": "uvicorn main:app --reload & npm run dev"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "vite": "^5.4.9"
+  },
+  "dependencies": {
+    "gulp": "^5.0.0",
+    "sass": "^1.80.0"
+  }
+}
