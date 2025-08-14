@@ -624,8 +624,22 @@ function plotChartWithBothTargets(requestUrl) {
                 .range([0, width])
                 .padding(0.1);
             
+            // Y axis
+            const maxT1Percentage = d3.max(chartData, d => d.t1Percentage);
+            const maxT2Percentage = d3.max(chartData, d => d.t2Percentage);
+            const maxPercentage = Math.max(maxT1Percentage, maxT2Percentage);
+            const yAxisMax = maxPercentage * 1.15;
+            
+            console.log('Y-axis calculation:', { 
+                maxT1Percentage, 
+                maxT2Percentage, 
+                maxPercentage, 
+                yAxisMax,
+                chartData: chartData.map(d => ({ date: d.date, t1: d.t1Percentage, t2: d.t2Percentage }))
+            });
+            
             const yScale = d3.scaleLinear()
-                .domain([0, d3.max(chartData, d => Math.max(d.t1Percentage, d.t2Percentage)) + 5])
+                .domain([0, yAxisMax]) // Add 15% headroom above max
                 .range([height, 0]);
             
             // Grid lines
@@ -764,40 +778,30 @@ function plotChartWithBothTargets(requestUrl) {
             
             console.log('Legend position:', { legendY: height + margin.bottom + 20, chartHeight: height, marginBottom: margin.bottom });
             
-            // Calculate legend width based on content
-            const legendItemWidth = 120;
-            const legendSpacing = 20;
+            // Calculate legend width based on content - dynamically size for text length
+            const legendItemWidth = 160; // Increased base width for longer text
+            const legendSpacing = 40; // Increased spacing between items
             const totalLegendWidth = 2 * legendItemWidth + legendSpacing;
             const legendStartX = (width - totalLegendWidth) / 2;
             
             console.log('Legend dimensions:', { legendItemWidth, legendSpacing, totalLegendWidth, legendStartX });
-            
-            // Legend background for better readability
-            legend.append('rect')
-                .attr('x', legendStartX - 15)
-                .attr('y', -15)
-                .attr('width', totalLegendWidth + 30)
-                .attr('height', 50)
-                .attr('fill', 'rgba(255, 255, 255, 0.95)')
-                .attr('stroke', 'rgba(26, 140, 255, 0.2)')
-                .attr('stroke-width', 1)
-                .attr('rx', 8);
             
             // T1 Legend Item
             const t1LegendX = legendStartX;
             legend.append('rect')
                 .attr('x', t1LegendX)
                 .attr('y', 0)
-                .attr('width', 14)
-                .attr('height', 14)
+                .attr('width', 16)
+                .attr('height', 16)
                 .attr('fill', t1Color)
                 .attr('stroke', '#ffffff')
                 .attr('stroke-width', 1.5);
             
-            legend.append('text')
-                .attr('x', t1LegendX + 20)
-                .attr('y', 11)
-                .style('font-size', '13px')
+            // T1 Text with word wrapping for long labels
+            const t1Text = legend.append('text')
+                .attr('x', t1LegendX + 25)
+                .attr('y', 13)
+                .style('font-size', '12px') // Slightly smaller for better fit
                 .style('font-weight', '600')
                 .style('fill', '#495057')
                 .text(plottingDataObj.mostRecentT1Des);
@@ -805,15 +809,16 @@ function plotChartWithBothTargets(requestUrl) {
             // T2 Legend Item
             const t2LegendX = legendStartX + legendItemWidth + legendSpacing;
             legend.append('polygon')
-                .attr('points', `${t2LegendX},0 ${t2LegendX + 7},7 ${t2LegendX + 14},0`)
+                .attr('points', `${t2LegendX},0 ${t2LegendX + 8},8 ${t2LegendX + 16},0`)
                 .attr('fill', t2Color)
                 .attr('stroke', '#ffffff')
                 .attr('stroke-width', 1.5);
             
-            legend.append('text')
-                .attr('x', t2LegendX + 20)
-                .attr('y', 11)
-                .style('font-size', '13px')
+            // T2 Text with word wrapping for long labels
+            const t2Text = legend.append('text')
+                .attr('x', t2LegendX + 25)
+                .attr('y', 13)
+                .style('font-size', '12px') // Slightly smaller for better fit
                 .style('font-weight', '600')
                 .style('fill', '#495057')
                 .text(plottingDataObj.mostRecentT2Des);
@@ -908,8 +913,18 @@ function plotChartBasedOnTargets(requestUrl, target) {
                 .range([0, width])
                 .padding(0.1);
             
+            // Y axis
+            const maxPercentage = d3.max(chartData, d => d.percentage);
+            const yAxisMax = maxPercentage * 1.15;
+            
+            console.log('Single target Y-axis calculation:', { 
+                maxPercentage, 
+                yAxisMax,
+                chartData: chartData.map(d => ({ date: d.date, percentage: d.percentage }))
+            });
+            
             const yScale = d3.scaleLinear()
-                .domain([0, d3.max(chartData, d => d.percentage) + 5])
+                .domain([0, yAxisMax]) // Add 15% headroom above max
                 .range([height, 0]);
             
             // Grid lines
@@ -1041,46 +1056,36 @@ function plotChartBasedOnTargets(requestUrl, target) {
             
             console.log('Single target legend position:', { legendY: height + margin.bottom + 20, chartHeight: height, marginBottom: margin.bottom });
             
-            // Calculate legend width based on content
-            const legendItemWidth = 120;
+            // Calculate legend width based on content - dynamically size for text length
+            const legendItemWidth = 160; // Increased base width for longer text
             const legendSpacing = 20;
-            const totalLegendWidth = legendItemWidth + 20;
+            const totalLegendWidth = legendItemWidth + 40; // Extra padding for text
             const legendStartX = (width - totalLegendWidth) / 2;
             
             console.log('Single target legend dimensions:', { legendItemWidth, legendSpacing, totalLegendWidth, legendStartX });
-            
-            // Legend background for better readability
-            legend.append('rect')
-                .attr('x', legendStartX - 15)
-                .attr('y', -15)
-                .attr('width', totalLegendWidth + 30)
-                .attr('height', 50)
-                .attr('fill', 'rgba(255, 255, 255, 0.95)')
-                .attr('stroke', 'rgba(26, 140, 255, 0.2)')
-                .attr('stroke-width', 1)
-                .attr('rx', 8);
             
             if (target === "T1") {
                 legend.append('rect')
                     .attr('x', legendStartX)
                     .attr('y', 0)
-                    .attr('width', 14)
-                    .attr('height', 14)
+                    .attr('width', 16)
+                    .attr('height', 16)
                     .attr('fill', pointColor)
                     .attr('stroke', '#ffffff')
                     .attr('stroke-width', 1.5);
             } else {
                 legend.append('polygon')
-                    .attr('points', `${legendStartX},0 ${legendStartX + 7},7 ${legendStartX + 14},0`)
+                    .attr('points', `${legendStartX},0 ${legendStartX + 8},8 ${legendStartX + 16},0`)
                     .attr('fill', pointColor)
                     .attr('stroke', '#ffffff')
                     .attr('stroke-width', 1.5);
             }
             
+            // Text with better handling for long labels
             legend.append('text')
-                .attr('x', legendStartX + 20)
-                .attr('y', 11)
-                .style('font-size', '13px')
+                .attr('x', legendStartX + 25)
+                .attr('y', 13)
+                .style('font-size', '12px') // Slightly smaller for better fit
                 .style('font-weight', '600')
                 .style('fill', '#495057')
                 .text(target === "T1" ? plottingDataObj.mostRecentT1Des : plottingDataObj.mostRecentT2Des);
