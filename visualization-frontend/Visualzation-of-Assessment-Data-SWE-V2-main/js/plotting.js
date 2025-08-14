@@ -2,7 +2,7 @@ import { clearPlotMeasureSelector, clearPlotStartDateSelector, clearPlotEndDateS
 
 import {revealUnselectedSelectorError,} from '/js/inputting.js';
 import {clearInputSloSelector } from "/js/inputModal.js";
-
+import * as d3 from 'd3';
 
 //Resets selected SLO to it's default selection.
 var clearPlotSloSelector = clearInputSloSelector;
@@ -72,10 +72,6 @@ const displayElements = {
 
 
 var chartObj; //Variable which holds the different instances of the graph.
-
-google.load("visualization", "1", { packages: ["corechart"] });
-
-
 
 // (i.e SLO, Measure) filters selectors based on the ones that are unselected and returns them in an array.
 function getAllUnslectedSelectors(inputFields) {
@@ -398,7 +394,6 @@ async function plotTransitionEditedGraphPointSize(plotDataUrl,displayElements) {
  
 
 
-
 //Loads a 2D array with the data needed to plot the graph for both targets.
 function loadDataTableBothTargets(plotDataObj){
     
@@ -471,7 +466,7 @@ function loadDataTableBasedOnTargets(plotDataObj, target) {
   
 
         const cols = plotDataObj.dates.length; 
- 
+
         for(let index = 0; index < cols; index++){
             
             let rowArray = [];
@@ -503,7 +498,7 @@ function loadDataTableBasedOnTargets(plotDataObj, target) {
             let rowArray = [];
             
             rowArray.push(plotDataObj.dates[index]);
-            rowArray.push(plotDataObj.percentagesMetT2[index]);
+            rowArray.push(plotDataObj.percentagesMetT1[index]);
             rowArray.push(plotDataObj.T2[index]);
             
             result.push(rowArray);
@@ -590,36 +585,231 @@ function plotChartWithBothTargets(requestUrl) {
         
         plottingDataObj = response.data;
   
-       
-        google.setOnLoadCallback(drawChart);
+        drawChartWithD3();
 
-        function drawChart() {
-
-            let data = google.visualization.arrayToDataTable(loadDataTableBothTargets(plottingDataObj));
-
-            let options = {
-                title: plottingDataObj.title,
-                hAxis: { title: 'School Term', minValue: 0, maxValue: 15 },
-                vAxis: { title: 'Percentage-met', minValue: 0, maxValue: 15 },
-                legend: 'none',
-                interpolateNulls: true,
-                pointSize: pointSize,
-                colors: pickedColors,
-                
-                series: {
-                        0:{pointShape:{type:'square'}},
-                        1:{pointShape:{type:'star', sides:5,dent:0.6}},
-                        2: { lineWidth: lineSize, pointSize: 0 },
-                        3:  { lineWidth: lineSize, pointSize: 0 }
-                    },
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: { fill: 'transparent' },
-                    legend:'right'
-            };
-
-            chartObj = new google.visualization.ScatterChart(document.getElementById('chart-div'));
-            chartObj.draw(data, options);   
+        function drawChartWithD3() {
+            // Clear previous chart
+            d3.select('#chart-div').selectAll('*').remove();
+            
+            const data = loadDataTableBothTargets(plottingDataObj);
+            if (data.length === 0) return;
+            
+            // Skip header row and prepare data for D3
+            const chartData = data.slice(1).map(row => ({
+                date: row[0],
+                t1Percentage: row[1],
+                t2Percentage: row[2],
+                t1Value: row[3],
+                t2Value: row[4]
+            }));
+            
+            const margin = {top: 40, right: 120, bottom: 60, left: 60};
+            const width = chartContainer.clientWidth - margin.left - margin.right;
+            const height = chartContainer.clientHeight - margin.top - margin.bottom;
+            
+            // Create SVG
+            const svg = d3.select('#chart-div')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            // Scales
+            const xScale = d3.scaleBand()
+                .domain(chartData.map(d => d.date))
+                .range([0, width])
+                .padding(0.1);
+            
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(chartData, d => Math.max(d.t1Percentage, d.t2Percentage)) + 5])
+                .range([height, 0]);
+            
+            // Grid lines
+            const yGrid = d3.axisLeft(yScale)
+                .tickSize(-width)
+                .tickFormat('')
+                .ticks(5);
+            
+            svg.append('g')
+                .attr('class', 'grid')
+                .call(yGrid)
+                .style('stroke', 'rgba(26, 140, 255, 0.1)')
+                .style('stroke-width', 1);
+            
+            // X axis
+            svg.append('g')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(xScale))
+                .style('font-size', '12px')
+                .style('color', '#495057');
+            
+            // Y axis
+            svg.append('g')
+                .call(d3.axisLeft(yScale))
+                .style('font-size', '12px')
+                .style('color', '#495057');
+            
+            // Axis labels
+            svg.append('text')
+                .attr('x', width / 2)
+                .attr('y', height + margin.bottom - 10)
+                .style('text-anchor', 'middle')
+                .style('font-size', '14px')
+                .style('font-weight', '600')
+                .style('fill', '#495057')
+                .text('School Term');
+            
+            svg.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -margin.left + 20)
+                .attr('x', -height / 2)
+                .style('text-anchor', 'middle')
+                .style('font-size', '14px')
+                .style('font-weight', '600')
+                .style('fill', '#495057')
+                .text('Percentage-met');
+            
+            // Title
+            svg.append('text')
+                .attr('x', width / 2)
+                .attr('y', -margin.top / 2)
+                .style('text-anchor', 'middle')
+                .style('font-size', '16px')
+                .style('font-weight', '600')
+                .style('fill', '#1a8cff')
+                .text(plottingDataObj.title);
+            
+            // T1 Line
+            const t1Line = d3.line()
+                .x(d => xScale(d.date) + xScale.bandwidth() / 2)
+                .y(d => yScale(d.t1Percentage))
+                .curve(d3.curveMonotoneX);
+            
+            svg.append('path')
+                .datum(chartData)
+                .attr('fill', 'none')
+                .attr('stroke', t1Color)
+                .attr('stroke-width', lineSize)
+                .attr('d', t1Line);
+            
+            // T2 Line
+            const t2Line = d3.line()
+                .x(d => xScale(d.date) + xScale.bandwidth() / 2)
+                .y(d => yScale(d.t2Percentage))
+                .curve(d3.curveMonotoneX);
+            
+            svg.append('path')
+                .datum(chartData)
+                .attr('fill', 'none')
+                .attr('stroke', t2Color)
+                .attr('stroke-width', lineSize)
+                .attr('d', t2Line);
+            
+            // T1 Points
+            svg.selectAll('.t1-points')
+                .data(chartData)
+                .enter()
+                .append('rect')
+                .attr('class', 't1-points')
+                .attr('x', d => xScale(d.date) + xScale.bandwidth() / 2 - pointSize / 2)
+                .attr('y', d => yScale(d.t1Percentage) - pointSize / 2)
+                .attr('width', pointSize)
+                .attr('height', pointSize)
+                .attr('fill', t1Color)
+                .attr('stroke', '#ffffff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'pointer')
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('stroke-width', 3);
+                    showTooltip(event, `T1: ${d.t1Percentage}% (${d.t1Value})`);
+                })
+                .on('mouseout', function() {
+                    d3.select(this).attr('stroke-width', 2);
+                    hideTooltip();
+                });
+            
+            // T2 Points
+            svg.selectAll('.t2-points')
+                .data(chartData)
+                .enter()
+                .append('polygon')
+                .attr('class', 't2-points')
+                .attr('points', d => {
+                    const x = xScale(d.date) + xScale.bandwidth() / 2;
+                    const y = yScale(d.t2Percentage);
+                    const size = pointSize / 2;
+                    return `${x},${y - size} ${x - size},${y + size} ${x + size},${y + size}`;
+                })
+                .attr('fill', t2Color)
+                .attr('stroke', '#ffffff')
+                .attr('stroke-width', 2)
+                .style('cursor', 'pointer')
+                .on('mouseover', function(event, d) {
+                    d3.select(this).attr('stroke-width', 3);
+                    showTooltip(event, `T2: ${d.t2Percentage}% (${d.t2Value})`);
+                })
+                .on('mouseout', function() {
+                    d3.select(this).attr('stroke-width', 2);
+                    hideTooltip();
+                });
+            
+            // Legend
+            const legend = svg.append('g')
+                .attr('class', 'legend')
+                .attr('transform', `translate(${width + 20}, 0)`);
+            
+            // T1 Legend
+            legend.append('rect')
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('width', 12)
+                .attr('height', 12)
+                .attr('fill', t1Color);
+            
+            legend.append('text')
+                .attr('x', 20)
+                .attr('y', 9)
+                .style('font-size', '12px')
+                .style('fill', '#495057')
+                .text(plottingDataObj.mostRecentT1Des);
+            
+            // T2 Legend
+            legend.append('polygon')
+                .attr('points', '0,20 8,28 16,20')
+                .attr('fill', t2Color);
+            
+            legend.append('text')
+                .attr('x', 20)
+                .attr('y', 28)
+                .style('font-size', '12px')
+                .style('fill', '#495057')
+                .text(plottingDataObj.mostRecentT2Des);
+            
+            // Tooltip
+            const tooltip = d3.select('#chart-div')
+                .append('div')
+                .attr('class', 'tooltip')
+                .style('position', 'absolute')
+                .style('background', 'rgba(0, 0, 0, 0.8)')
+                .style('color', 'white')
+                .style('padding', '8px 12px')
+                .style('border-radius', '6px')
+                .style('font-size', '12px')
+                .style('pointer-events', 'none')
+                .style('opacity', 0)
+                .style('transition', 'opacity 0.2s');
+            
+            function showTooltip(event, text) {
+                tooltip.style('opacity', 1)
+                    .html(text)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px');
+            }
+            
+            function hideTooltip() {
+                tooltip.style('opacity', 0);
+            }
         }
         
     });
@@ -649,37 +839,216 @@ function plotChartBasedOnTargets(requestUrl, target) {
         plottingDataObj = response.data;
       
 
-        google.setOnLoadCallback(drawChartBasedOnTarget);
+        drawChartBasedOnTargetWithD3();
 
-        function drawChartBasedOnTarget() {
-
-            let data = google.visualization.arrayToDataTable(loadDataTableBasedOnTargets(plottingDataObj, target));
-             
-            let options = {
-                
-                title: plottingDataObj.title,
-                hAxis: { title: 'School Term', minValue: 0, maxValue: 15 },
-                vAxis: { title: 'Percentage-met', minValue: 0, maxValue: 15 },
-                legend: 'none',
-                interpolateNulls: true,
-                pointSize: pointSize,
-                colors: pickedColors,
-                
-                
-                series: {
-                    0:{pointShape:{type:'square'}},
-                    1: { lineWidth: lineSize, pointSize: 0 }//The lines should not have points, hence why point size at zero.
-                    
-                },
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: { fill: 'transparent' },
-                    legend:'right'
-                };
-
-                chartObj = new google.visualization.ScatterChart(document.getElementById('chart-div'));
-                chartObj.draw(data, options);   
-         }
+        function drawChartBasedOnTargetWithD3() {
+            // Clear previous chart
+            d3.select('#chart-div').selectAll('*').remove();
+            
+            const data = loadDataTableBasedOnTargets(plottingDataObj, target);
+            if (data.length === 0) return;
+            
+            // Skip header row and prepare data for D3
+            const chartData = data.slice(1).map(row => ({
+                date: row[0],
+                percentage: row[1],
+                value: row[2]
+            }));
+            
+            const margin = {top: 40, right: 120, bottom: 60, left: 60};
+            const width = chartContainer.clientWidth - margin.left - margin.right;
+            const height = chartContainer.clientHeight - margin.top - margin.bottom;
+            
+            // Create SVG
+            const svg = d3.select('#chart-div')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            // Scales
+            const xScale = d3.scaleBand()
+                .domain(chartData.map(d => d.date))
+                .range([0, width])
+                .padding(0.1);
+            
+            const yScale = d3.scaleLinear()
+                .domain([0, d3.max(chartData, d => d.percentage) + 5])
+                .range([height, 0]);
+            
+            // Grid lines
+            const yGrid = d3.axisLeft(yScale)
+                .tickSize(-width)
+                .tickFormat('')
+                .ticks(5);
+            
+            svg.append('g')
+                .attr('class', 'grid')
+                .call(yGrid)
+                .style('stroke', 'rgba(26, 140, 255, 0.1)')
+                .style('stroke-width', 1);
+            
+            // X axis
+            svg.append('g')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(xScale))
+                .style('font-size', '12px')
+                .style('color', '#495057');
+            
+            // Y axis
+            svg.append('g')
+                .call(d3.axisLeft(yScale))
+                .style('font-size', '12px')
+                .style('color', '#495057');
+            
+            // Axis labels
+            svg.append('text')
+                .attr('x', width / 2)
+                .attr('y', height + margin.bottom - 10)
+                .style('text-anchor', 'middle')
+                .style('font-size', '14px')
+                .style('font-weight', '600')
+                .style('fill', '#495057')
+                .text('School Term');
+            
+            svg.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -margin.left + 20)
+                .attr('x', -height / 2)
+                .style('text-anchor', 'middle')
+                .style('font-size', '14px')
+                .style('font-weight', '600')
+                .style('fill', '#495057')
+                .text('Percentage-met');
+            
+            // Title
+            svg.append('text')
+                .attr('x', width / 2)
+                .attr('y', -margin.top / 2)
+                .style('text-anchor', 'middle')
+                .style('font-size', '16px')
+                .style('font-weight', '600')
+                .style('fill', '#1a8cff')
+                .text(plottingDataObj.title);
+            
+            // Line
+            const line = d3.line()
+                .x(d => xScale(d.date) + xScale.bandwidth() / 2)
+                .y(d => yScale(d.percentage))
+                .curve(d3.curveMonotoneX);
+            
+            svg.append('path')
+                .datum(chartData)
+                .attr('fill', 'none')
+                .attr('stroke', target === "T1" ? t1Color : t2Color)
+                .attr('stroke-width', lineSize)
+                .attr('d', line);
+            
+            // Points
+            const pointColor = target === "T1" ? t1Color : t2Color;
+            const pointShape = target === "T1" ? 'rect' : 'polygon';
+            
+            if (target === "T1") {
+                // Square points for T1
+                svg.selectAll('.target-points')
+                    .data(chartData)
+                    .enter()
+                    .append('rect')
+                    .attr('class', 'target-points')
+                    .attr('x', d => xScale(d.date) + xScale.bandwidth() / 2 - pointSize / 2)
+                    .attr('y', d => yScale(d.percentage) - pointSize / 2)
+                    .attr('width', pointSize)
+                    .attr('height', pointSize)
+                    .attr('fill', pointColor)
+                    .attr('stroke', '#ffffff')
+                    .attr('stroke-width', 2)
+                    .style('cursor', 'pointer')
+                    .on('mouseover', function(event, d) {
+                        d3.select(this).attr('stroke-width', 3);
+                        showTooltip(event, `${target}: ${d.percentage}% (${d.value})`);
+                    })
+                    .on('mouseout', function() {
+                        d3.select(this).attr('stroke-width', 2);
+                        hideTooltip();
+                    });
+            } else {
+                // Star points for T2
+                svg.selectAll('.target-points')
+                    .data(chartData)
+                    .enter()
+                    .append('polygon')
+                    .attr('class', 'target-points')
+                    .attr('points', d => {
+                        const x = xScale(d.date) + xScale.bandwidth() / 2;
+                        const y = yScale(d.percentage);
+                        const size = pointSize / 2;
+                        return `${x},${y - size} ${x - size},${y + size} ${x + size},${y + size}`;
+                    })
+                    .attr('fill', pointColor)
+                    .attr('stroke', '#ffffff')
+                    .attr('stroke-width', 2)
+                    .style('cursor', 'pointer')
+                    .on('mouseover', function(event, d) {
+                        d3.select(this).attr('stroke-width', 3);
+                        showTooltip(event, `${target}: ${d.percentage}% (${d.value})`);
+                    })
+                    .on('mouseout', function() {
+                        d3.select(this).attr('stroke-width', 2);
+                        hideTooltip();
+                    });
+            }
+            
+            // Legend
+            const legend = svg.append('g')
+                .attr('class', 'legend')
+                .attr('transform', `translate(${width + 20}, 0)`);
+            
+            if (target === "T1") {
+                legend.append('rect')
+                    .attr('x', 0)
+                    .attr('y', 0)
+                    .attr('width', 12)
+                    .attr('height', 12)
+                    .attr('fill', pointColor);
+            } else {
+                legend.append('polygon')
+                    .attr('points', '0,0 8,8 16,0')
+                    .attr('fill', pointColor);
+            }
+            
+            legend.append('text')
+                .attr('x', 20)
+                .attr('y', target === "T1" ? 9 : 8)
+                .style('font-size', '12px')
+                .style('fill', '#495057')
+                .text(target === "T1" ? plottingDataObj.mostRecentT1Des : plottingDataObj.mostRecentT2Des);
+            
+            // Tooltip
+            const tooltip = d3.select('#chart-div')
+                .append('div')
+                .attr('class', 'tooltip')
+                .style('position', 'absolute')
+                .style('background', 'rgba(0, 0, 0, 0.8)')
+                .style('color', 'white')
+                .style('padding', '8px 12px')
+                .style('border-radius', '6px')
+                .style('font-size', '12px')
+                .style('pointer-events', 'none')
+                .style('opacity', 0)
+                .style('transition', 'opacity 0.2s');
+            
+            function showTooltip(event, text) {
+                tooltip.style('opacity', 1)
+                    .html(text)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px');
+            }
+            
+            function hideTooltip() {
+                tooltip.style('opacity', 0);
+            }
+        }
      
     });
         
@@ -723,6 +1092,7 @@ function generatePlotDataQueryUrl() {
     const url = `http://127.0.0.1:8000/plot?slo=${currentSelectedSlo}&measure=${currentSelectedMeasure}&start_date=${currentSelectedStartDate}&end_date=${currentSelectedEndDate}`;
 
     return url;
+
 }
 
 
@@ -812,6 +1182,7 @@ function revealTargetT2RadioButton(targetPlotOptionButtonT2) {
     targetPlotOptionButtonT2.style.display = "block";
 
 }
+
 
 
 //Hides the target 2 color selector.
