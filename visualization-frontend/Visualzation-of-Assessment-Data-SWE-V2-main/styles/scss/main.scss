@@ -72,7 +72,12 @@ body{
     position: absolute;
     top: 2.5rem;
     margin-top: 55px;
+    overflow: visible; // Allow legend to be visible
     
+    // Ensure SVG content is fully visible
+    svg {
+        overflow: visible;
+    }
 }
 
 #confirmation-message-area{

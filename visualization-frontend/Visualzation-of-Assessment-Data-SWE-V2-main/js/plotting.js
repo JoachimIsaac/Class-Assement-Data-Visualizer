@@ -603,7 +603,7 @@ function plotChartWithBothTargets(requestUrl) {
                 t2Value: row[4]
             }));
             
-            const margin = {top: 40, right: 120, bottom: 60, left: 60};
+            const margin = {top: 40, right: 60, bottom: 100, left: 60};
             const width = chartContainer.clientWidth - margin.left - margin.right;
             const height = chartContainer.clientHeight - margin.top - margin.bottom;
             
@@ -611,9 +611,12 @@ function plotChartWithBothTargets(requestUrl) {
             const svg = d3.select('#chart-div')
                 .append('svg')
                 .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom)
+                .attr('height', height + margin.top + margin.bottom + 100) // Added extra height for legend
                 .append('g')
                 .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            console.log('Chart dimensions:', { width, height, margin });
+            console.log('SVG dimensions:', { svgWidth: width + margin.left + margin.right, svgHeight: height + margin.top + margin.bottom + 100 });
             
             // Scales
             const xScale = d3.scaleBand()
@@ -754,35 +757,64 @@ function plotChartWithBothTargets(requestUrl) {
                     hideTooltip();
                 });
             
-            // Legend
+            // Legend - positioned below the graph
             const legend = svg.append('g')
                 .attr('class', 'legend')
-                .attr('transform', `translate(${width + 20}, 0)`);
+                .attr('transform', `translate(0, ${height + margin.bottom + 20})`);
             
-            // T1 Legend
+            console.log('Legend position:', { legendY: height + margin.bottom + 20, chartHeight: height, marginBottom: margin.bottom });
+            
+            // Calculate legend width based on content
+            const legendItemWidth = 120;
+            const legendSpacing = 20;
+            const totalLegendWidth = 2 * legendItemWidth + legendSpacing;
+            const legendStartX = (width - totalLegendWidth) / 2;
+            
+            console.log('Legend dimensions:', { legendItemWidth, legendSpacing, totalLegendWidth, legendStartX });
+            
+            // Legend background for better readability
             legend.append('rect')
-                .attr('x', 0)
+                .attr('x', legendStartX - 15)
+                .attr('y', -15)
+                .attr('width', totalLegendWidth + 30)
+                .attr('height', 50)
+                .attr('fill', 'rgba(255, 255, 255, 0.95)')
+                .attr('stroke', 'rgba(26, 140, 255, 0.2)')
+                .attr('stroke-width', 1)
+                .attr('rx', 8);
+            
+            // T1 Legend Item
+            const t1LegendX = legendStartX;
+            legend.append('rect')
+                .attr('x', t1LegendX)
                 .attr('y', 0)
-                .attr('width', 12)
-                .attr('height', 12)
-                .attr('fill', t1Color);
+                .attr('width', 14)
+                .attr('height', 14)
+                .attr('fill', t1Color)
+                .attr('stroke', '#ffffff')
+                .attr('stroke-width', 1.5);
             
             legend.append('text')
-                .attr('x', 20)
-                .attr('y', 9)
-                .style('font-size', '12px')
+                .attr('x', t1LegendX + 20)
+                .attr('y', 11)
+                .style('font-size', '13px')
+                .style('font-weight', '600')
                 .style('fill', '#495057')
                 .text(plottingDataObj.mostRecentT1Des);
             
-            // T2 Legend
+            // T2 Legend Item
+            const t2LegendX = legendStartX + legendItemWidth + legendSpacing;
             legend.append('polygon')
-                .attr('points', '0,20 8,28 16,20')
-                .attr('fill', t2Color);
+                .attr('points', `${t2LegendX},0 ${t2LegendX + 7},7 ${t2LegendX + 14},0`)
+                .attr('fill', t2Color)
+                .attr('stroke', '#ffffff')
+                .attr('stroke-width', 1.5);
             
             legend.append('text')
-                .attr('x', 20)
-                .attr('y', 28)
-                .style('font-size', '12px')
+                .attr('x', t2LegendX + 20)
+                .attr('y', 11)
+                .style('font-size', '13px')
+                .style('font-weight', '600')
                 .style('fill', '#495057')
                 .text(plottingDataObj.mostRecentT2Des);
             
@@ -855,7 +887,7 @@ function plotChartBasedOnTargets(requestUrl, target) {
                 value: row[2]
             }));
             
-            const margin = {top: 40, right: 120, bottom: 60, left: 60};
+            const margin = {top: 40, right: 60, bottom: 100, left: 60};
             const width = chartContainer.clientWidth - margin.left - margin.right;
             const height = chartContainer.clientHeight - margin.top - margin.bottom;
             
@@ -863,9 +895,12 @@ function plotChartBasedOnTargets(requestUrl, target) {
             const svg = d3.select('#chart-div')
                 .append('svg')
                 .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom)
+                .attr('height', height + margin.top + margin.bottom + 100) // Added extra height for legend
                 .append('g')
                 .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            console.log('Single target chart dimensions:', { width, height, margin });
+            console.log('Single target SVG dimensions:', { svgWidth: width + margin.left + margin.right, svgHeight: height + margin.top + margin.bottom + 100 });
             
             // Scales
             const xScale = d3.scaleBand()
@@ -999,28 +1034,54 @@ function plotChartBasedOnTargets(requestUrl, target) {
                     });
             }
             
-            // Legend
+            // Legend - positioned below the graph
             const legend = svg.append('g')
                 .attr('class', 'legend')
-                .attr('transform', `translate(${width + 20}, 0)`);
+                .attr('transform', `translate(0, ${height + margin.bottom + 20})`);
+            
+            console.log('Single target legend position:', { legendY: height + margin.bottom + 20, chartHeight: height, marginBottom: margin.bottom });
+            
+            // Calculate legend width based on content
+            const legendItemWidth = 120;
+            const legendSpacing = 20;
+            const totalLegendWidth = legendItemWidth + 20;
+            const legendStartX = (width - totalLegendWidth) / 2;
+            
+            console.log('Single target legend dimensions:', { legendItemWidth, legendSpacing, totalLegendWidth, legendStartX });
+            
+            // Legend background for better readability
+            legend.append('rect')
+                .attr('x', legendStartX - 15)
+                .attr('y', -15)
+                .attr('width', totalLegendWidth + 30)
+                .attr('height', 50)
+                .attr('fill', 'rgba(255, 255, 255, 0.95)')
+                .attr('stroke', 'rgba(26, 140, 255, 0.2)')
+                .attr('stroke-width', 1)
+                .attr('rx', 8);
             
             if (target === "T1") {
                 legend.append('rect')
-                    .attr('x', 0)
+                    .attr('x', legendStartX)
                     .attr('y', 0)
-                    .attr('width', 12)
-                    .attr('height', 12)
-                    .attr('fill', pointColor);
+                    .attr('width', 14)
+                    .attr('height', 14)
+                    .attr('fill', pointColor)
+                    .attr('stroke', '#ffffff')
+                    .attr('stroke-width', 1.5);
             } else {
                 legend.append('polygon')
-                    .attr('points', '0,0 8,8 16,0')
-                    .attr('fill', pointColor);
+                    .attr('points', `${legendStartX},0 ${legendStartX + 7},7 ${legendStartX + 14},0`)
+                    .attr('fill', pointColor)
+                    .attr('stroke', '#ffffff')
+                    .attr('stroke-width', 1.5);
             }
             
             legend.append('text')
-                .attr('x', 20)
-                .attr('y', target === "T1" ? 9 : 8)
-                .style('font-size', '12px')
+                .attr('x', legendStartX + 20)
+                .attr('y', 11)
+                .style('font-size', '13px')
+                .style('font-weight', '600')
                 .style('fill', '#495057')
                 .text(target === "T1" ? plottingDataObj.mostRecentT1Des : plottingDataObj.mostRecentT2Des);
             
