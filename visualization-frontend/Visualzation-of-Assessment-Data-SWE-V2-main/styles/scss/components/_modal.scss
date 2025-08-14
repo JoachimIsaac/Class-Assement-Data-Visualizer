@@ -2,12 +2,13 @@
 .modal {
   .modal-dialog {
     max-width: 600px;
-    margin: 1.75rem auto;
+    margin: 1rem auto;
+    max-height: calc(100vh - 2rem);
     
     &.modal-dialog-centered {
       display: flex;
       align-items: center;
-      min-height: calc(100% - 3.5rem);
+      min-height: calc(100% - 2rem);
     }
   }
 
@@ -30,7 +31,7 @@
     background: linear-gradient(135deg, #1a8cff 0%, #0066cc 100%);
     color: white;
     border-bottom: none;
-    padding: 1.5rem 2rem;
+    padding: 1.25rem 1.5rem;
     position: relative;
 
     &::after {
@@ -79,25 +80,28 @@
   .modal-body {
     position: relative;
     flex: 1 1 auto;
-    padding: 2rem;
+    padding: 1.25rem;
     background: #ffffff;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 
     form {
       width: 100%;
 
       .mb-3 {
         justify-content: center;
-        margin-bottom: 1.5rem !important;
+        margin-bottom: 1rem !important;
       }
 
       .input-selector {
         justify-content: center;
+        margin-bottom: 0.75rem;
       }
 
       .description-container {
         display: flex;
         justify-content: center;
-        margin-bottom: 1.2rem;
+        margin-bottom: 0.75rem;
         margin-top: 0.5rem;
       }
     }
@@ -106,20 +110,20 @@
   .modal-footer {
     background: #f8f9fa;
     border-top: 1px solid rgba(26, 140, 255, 0.1);
-    padding: 1.5rem 2rem;
+    padding: 1.25rem 1.5rem;
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
 
-    .btn {
-      padding: 0.75rem 2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid transparent;
-      position: relative;
-      overflow: hidden;
+          .btn {
+        padding: 0.625rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
 
       &::before {
         content: '';
@@ -179,7 +183,7 @@
   .input-group-text {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1rem;
+    padding: 0.625rem 0.875rem;
     font-size: 0.95rem;
     font-weight: 600;
     color: #495057;
@@ -197,7 +201,7 @@
     border: 2px solid rgba(26, 140, 255, 0.2);
     border-left: none;
     border-radius: 0 8px 8px 0;
-    padding: 0.75rem 1rem;
+    padding: 0.625rem 0.875rem;
     font-size: 0.95rem;
     transition: all 0.3s ease;
     background: #ffffff;
@@ -227,7 +231,7 @@
 select {
   border: 2px solid rgba(26, 140, 255, 0.2);
   border-radius: 8px;
-  padding: 0.75rem 1rem;
+  padding: 0.625rem 0.875rem;
   font-size: 0.95rem;
   font-weight: 500;
   background: #ffffff;
@@ -256,10 +260,10 @@ select {
 textarea.form-control {
   border: 2px solid rgba(26, 140, 255, 0.2);
   border-radius: 8px;
-  padding: 0.75rem 1rem;
+  padding: 0.625rem 0.875rem;
   font-size: 0.95rem;
   resize: vertical;
-  min-height: 80px;
+  min-height: 60px;
   transition: all 0.3s ease;
   background: #ffffff;
 
@@ -325,10 +329,63 @@ textarea.form-control {
   text-align: center;
   box-shadow: 0 2px 8px rgba(26, 140, 255, 0.1);
   transition: all 0.3s ease;
+  height: 100%; // Match the height of input-group-text exactly
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
 
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(26, 140, 255, 0.2);
+  }
+}
+
+// Academic year area spacing fix
+#academic-year-area {
+  margin-bottom: 1rem !important;
+  margin-top: 0.75rem !important;
+}
+
+// Target selector spacing fix
+#SLO-selector-target {
+  margin-bottom: 1rem !important;
+}
+
+// Result description container alignment fix
+#result-description-container {
+  .input-group-prepend {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    
+    .input-group-text {
+      border-radius: 8px 8px 0 0;
+      border-bottom: none;
+      margin-bottom: 0;
+      border: 2px solid rgba(26, 140, 255, 0.2);
+      border-bottom: none;
+    }
+    
+    textarea.form-control {
+      border-radius: 0 0 8px 8px;
+      border-top: none;
+      margin-top: 0;
+      width: 100%;
+      border: 2px solid rgba(26, 140, 255, 0.2);
+      border-top: none;
+      min-height: 60px;
+      
+      &:focus {
+        border-color: #1a8cff;
+        box-shadow: 0 0 0 3px rgba(26, 140, 255, 0.1);
+      }
+      
+      &:hover {
+        border-color: rgba(26, 140, 255, 0.4);
+      }
+    }
   }
 }
 
@@ -362,7 +419,7 @@ textarea.form-control {
   border: 2px solid #1a8cff;
   font-weight: 600;
   color: white;
-  padding: 0.75rem 2rem;
+  padding: 0.625rem 1.5rem;
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -382,8 +439,9 @@ textarea.form-control {
 @media (max-width: 768px) {
   .modal {
     .modal-dialog {
-      margin: 1rem;
-      max-width: calc(100% - 2rem);
+      margin: 0.5rem;
+      max-width: calc(100% - 1rem);
+      max-height: calc(100vh - 1rem);
     }
 
     .modal-content {
@@ -393,7 +451,26 @@ textarea.form-control {
     .modal-header,
     .modal-body,
     .modal-footer {
-      padding: 1rem 1.5rem;
+      padding: 1rem;
+    }
+    
+    .modal-body {
+      max-height: calc(100vh - 150px);
+    }
+  }
+}
+
+// Ensure modal fits within viewport
+@media (max-height: 800px) {
+  .modal {
+    .modal-dialog {
+      margin: 0.5rem auto;
+      max-height: calc(100vh - 1rem);
+    }
+    
+    .modal-body {
+      max-height: calc(100vh - 180px);
+      padding: 1rem;
     }
   }
 }
