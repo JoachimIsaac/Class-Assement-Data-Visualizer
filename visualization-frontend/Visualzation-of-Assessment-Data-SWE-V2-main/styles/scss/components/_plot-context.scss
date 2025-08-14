@@ -12,6 +12,19 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   align-items: center;
 
+  // Mobile responsive adjustments
+  @media (max-width: 768px) {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 6px;
+    padding: 8px 10px;
+    min-width: 100%;
+    justify-content: center;
+  }
+
   &:hover {
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 4px 20px rgba(26, 140, 255, 0.12);
@@ -59,10 +72,6 @@
 
   // Responsive behavior
   @media (max-width: 768px) {
-    gap: 8px;
-    padding: 10px 12px;
-    margin-bottom: 12px;
-
     .context-chip {
       padding: 6px 10px;
       min-width: calc(50% - 4px);
@@ -80,8 +89,19 @@
 
   @media (max-width: 480px) {
     .context-chip {
-      min-width: 100%;
+      padding: 5px 8px;
+      min-width: calc(100% - 6px);
       justify-content: center;
+
+      .context-label {
+        font-size: 10px;
+        letter-spacing: 0.3px;
+      }
+
+      .context-value {
+        font-size: 11px;
+        max-width: 100px;
+      }
     }
   }
 }
