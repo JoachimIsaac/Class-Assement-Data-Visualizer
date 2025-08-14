@@ -73,6 +73,87 @@ const displayElements = {
 
 var chartObj; //Variable which holds the different instances of the graph.
 
+// Plot context state management
+let currentPlotContext = {
+    slo: null,
+    sloDesc: null,
+    measure: null,
+    measureDesc: null,
+    startTerm: null,
+    endTerm: null
+};
+
+// Function to update plot context display
+function updatePlotContextDisplay() {
+    const sloValue = document.getElementById('slo-value');
+    const measureValue = document.getElementById('measure-value');
+    const datesValue = document.getElementById('dates-value');
+    
+    // Update SLO chip
+    if (currentPlotContext.slo) {
+        sloValue.textContent = currentPlotContext.slo;
+        sloValue.parentElement.title = currentPlotContext.sloDesc || '';
+    } else {
+        sloValue.textContent = '—';
+        sloValue.parentElement.title = '';
+    }
+    
+    // Update Measure chip
+    if (currentPlotContext.measure) {
+        measureValue.textContent = currentPlotContext.measure;
+        measureValue.parentElement.title = currentPlotContext.measureDesc || '';
+    } else {
+        measureValue.textContent = '—';
+        measureValue.parentElement.title = '';
+    }
+    
+    // Update Dates chip
+    if (currentPlotContext.startTerm && currentPlotContext.endTerm) {
+        if (currentPlotContext.startTerm === currentPlotContext.endTerm) {
+            datesValue.textContent = currentPlotContext.startTerm;
+        } else {
+            datesValue.textContent = `${currentPlotContext.startTerm} to ${currentPlotContext.endTerm}`;
+        }
+        datesValue.parentElement.title = `Date range: ${currentPlotContext.startTerm} to ${currentPlotContext.endTerm}`;
+    } else {
+        datesValue.textContent = '—';
+        datesValue.parentElement.title = '';
+    }
+}
+
+// Function to update plot context from current selections
+function updatePlotContextFromSelections() {
+    const sloSelector = document.getElementById('SLO-selector-plt');
+    const measureSelector = document.getElementById('measure-selector-plt');
+    const startSelector = document.getElementById('start-selector-plt');
+    const endSelector = document.getElementById('end-selector-plt');
+    
+    if (sloSelector.selectedIndex > 0 && measureSelector.selectedIndex > 0 && 
+        startSelector.selectedIndex > 0 && endSelector.selectedIndex > 0) {
+        
+        currentPlotContext.slo = sloSelector.options[sloSelector.selectedIndex].text;
+        currentPlotContext.measure = measureSelector.options[measureSelector.selectedIndex].text;
+        currentPlotContext.startTerm = startSelector.options[startSelector.selectedIndex].text;
+        currentPlotContext.endTerm = endSelector.options[endSelector.selectedIndex].text;
+        
+        // Get descriptions from the description containers
+        const sloDescContainer = document.getElementById('description-container-SLO-plt');
+        const measureDescContainer = document.getElementById('description-container-measure-plt');
+        
+        if (sloDescContainer && sloDescContainer.style.display !== 'none') {
+            const sloDescText = document.getElementById('modal-SLO-description-plt');
+            currentPlotContext.sloDesc = sloDescText ? sloDescText.value : '';
+        }
+        
+        if (measureDescContainer && measureDescContainer.style.display !== 'none') {
+            const measureDescText = document.getElementById('modal-measure-description-plt');
+            currentPlotContext.measureDesc = measureDescText ? measureDescText.value : '';
+        }
+        
+        updatePlotContextDisplay();
+    }
+}
+
 // (i.e SLO, Measure) filters selectors based on the ones that are unselected and returns them in an array.
 function getAllUnslectedSelectors(inputFields) {
     
@@ -1303,6 +1384,9 @@ targetPlotRadioButtonBoth.addEventListener('change', async () => {
 
     let plotDataUrl = await generatePlotDataQueryUrl();
 
+    // Update plot context before re-plotting
+    updatePlotContextFromSelections();
+
     plotTransitionEditedTargets(plotDataUrl,displayElements);
     displayColorSelectorT1(targetPlotColorOptionButtonT1);
     displayColorSelectorT2(targetPlotColorOptionButtonT2);
@@ -1315,6 +1399,9 @@ targetPlotRadioButtonBoth.addEventListener('change', async () => {
 targetPlotRadioButtonT1.addEventListener('change', async () => {
 
     let plotDataUrl = await generatePlotDataQueryUrl();
+
+    // Update plot context before re-plotting
+    updatePlotContextFromSelections();
 
     plotTransitionEditedTargets(plotDataUrl,displayElements);
     displayColorSelectorT1(targetPlotColorOptionButtonT1);
@@ -1329,6 +1416,9 @@ targetPlotRadioButtonT2.addEventListener('change', async () => {
 
     let plotDataUrl = await generatePlotDataQueryUrl();
 
+    // Update plot context before re-plotting
+    updatePlotContextFromSelections();
+
     plotTransitionEditedTargets(plotDataUrl,displayElements);
     hideColorSelectorT1(targetPlotColorOptionButtonT1); 
     displayColorSelectorT2(targetPlotColorOptionButtonT2);
@@ -1342,6 +1432,9 @@ targetPlotColorRadioButtonT1.addEventListener('change', async () => {
 
     let plotDataUrl = await generatePlotDataQueryUrl();
 
+    // Update plot context before re-plotting
+    updatePlotContextFromSelections();
+
     plotTransitionEditedTargetColors(plotDataUrl,displayElements);
     
 });
@@ -1352,6 +1445,9 @@ targetPlotColorRadioButtonT1.addEventListener('change', async () => {
 targetPlotColorRadioButtonT2.addEventListener('change', async () => {
     
     let plotDataUrl = await generatePlotDataQueryUrl();
+
+    // Update plot context before re-plotting
+    updatePlotContextFromSelections();
 
     plotTransitionEditedTargetColors(plotDataUrl,displayElements);
     
@@ -1364,6 +1460,9 @@ pointSizeSelector.addEventListener('change', async () => {
     
     let plotDataUrl = await generatePlotDataQueryUrl();
 
+    // Update plot context before re-plotting
+    updatePlotContextFromSelections();
+
     plotTransitionEditedGraphPointSize(plotDataUrl,displayElements);
     
 });
@@ -1374,6 +1473,9 @@ pointSizeSelector.addEventListener('change', async () => {
 lineSizeSelector.addEventListener('change', async () => {
 
     let plotDataUrl = await generatePlotDataQueryUrl();
+
+    // Update plot context before re-plotting
+    updatePlotContextFromSelections();
 
     plotTransitonEditedGraphLineSize(plotDataUrl,displayElements);
     
@@ -1405,6 +1507,9 @@ plottingModalPlotButton.addEventListener('click', async () => {
         const currentSelectedMeasure = measureSelectorElement.options[measureSelectorElement.selectedIndex].text;
 
 
+        // Update plot context before plotting
+        updatePlotContextFromSelections();
+        
         axios.get(`http://127.0.0.1:8000/target/T2/exist/${currentSelectedSlo}/${currentSelectedMeasure}`).then((response) => {
             
             const hasBothTargets = response.data;
@@ -1437,5 +1542,10 @@ plottingModalPlotButton.addEventListener('click', async () => {
 
 
 
+
+// Initialize plot context display when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    updatePlotContextDisplay();
+});
 
 export {loadingElement,displayLoadingAnimation,dashboardLogo,hideDashboardLogo};

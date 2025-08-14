@@ -247,10 +247,25 @@
 
 
 <div id="settings-container">
-    <div class="option 1">
-      <label for="target-type">Both Targets</label>
-      <input type="radio" id="=target-radio-1" name="targets-to-plot" checked>
-    </div>
+    <div class="control-options">
+      <div id="plot-context" class="plot-context">
+        <div class="context-chip" id="slo-context">
+          <span class="context-label">SLO:</span>
+          <span class="context-value" id="slo-value">—</span>
+        </div>
+        <div class="context-chip" id="measure-context">
+          <span class="context-label">Measure:</span>
+          <span class="context-value" id="measure-value">—</span>
+        </div>
+        <div class="context-chip" id="dates-context">
+          <span class="context-label">Dates:</span>
+          <span class="context-value" id="dates-value">—</span>
+        </div>
+      </div>
+      <div class="option 1">
+        <label for="target-type">Both Targets</label>
+        <input type="radio" id="=target-radio-1" name="targets-to-plot" checked>
+      </div>
     <div class="option 2">
       <label for="target-type">Target 1 only</label>
       <input type="radio" id="=target-radio-2" name="targets-to-plot">
@@ -301,6 +316,7 @@
               <option>10</option>
         </select>
       </div>
+    </div>
 </div>
         
 
