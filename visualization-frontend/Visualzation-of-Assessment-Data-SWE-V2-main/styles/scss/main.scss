@@ -1,123 +1,16 @@
 
-@import "modal-styles";
+@import "components/navbar";
+@import "components/modal";
 
 body{
     background-color: #efefef;
     overflow: hidden;
 }
 
-.navbar{
-
-    display: inline-block;
-    background-color: #1a8cff;
-
-    .container{
-    
-        .navbar-logo{
-            padding: 5px;
-            margin-bottom: 0;
-
-            img{
-            width: 45px;
-            height: 45px;
-            border-radius: 40%;
-            border: 4px solid lightgrey;
-            transition: all ease-in-out 0.3s;
-            }
-        }
-
-        .navbar-logo:hover{
-
-            padding: 5px;
-            margin-bottom: 0;
-
-            img{
-            width: 45px;
-            height: 45px;
-            border-radius: 40%;
-            border: 4px solid yellow;
-        }
-    }
-
-
-    button{
-        margin-right: 15px;
-        border: 2px solid white;
-        transition: all ease-in-out 0.3s;
-    }
-
-     button:hover{
-        margin-right: 15px;
-        border: 4px solid yellow;
-    }
-
-
-    .options-area{
-        .navbar-nav{
-            margin-left: auto;
-            margin-right: 15px;
-
-           li span{
-               color: white;
-               font-size: 1.2rem;
-               transition: all ease-in-out 0.3s;
-           } 
-
-           li span:hover{
-               font-weight: bold;
-               color: yellow;
-           }
-
-        }
-      }
-   }
-}
 
 
 
 
-#settings-container{
-    display: none;
-    justify-content: center;
-    border-top: 5px solid lightgrey;
-    border-bottom: 5px solid lightgrey;
-    background-color: #d7d7d7;
-    width:100%;
-    position: absolute;
-    margin-top: 70px;
-    z-index: 3;
-    padding: 5px;
-    div.option{
-        margin-right:1rem;
-        font-size: 1.2rem;
-        text-align: center;
-    }
-
-    // div.option.t1.color{
-    
-    // }
-
-    // div.option.t2.color{
-
-    // }
-
-
-    // div.option{
-        
-    // }
-    
-    // div.option.\32 {
-    // }
-}
-
-
-#t1-color-selector{
-height: 1.2rem;
-}
-
-#t2-color-selector{
-    height: 1.2rem;
-}
 
 
 #interactive-area{

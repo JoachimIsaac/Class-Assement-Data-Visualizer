@@ -1,0 +1,399 @@
+// Modernized Modal Component
+.modal {
+  .modal-dialog {
+    max-width: 600px;
+    margin: 1.75rem auto;
+    
+    &.modal-dialog-centered {
+      display: flex;
+      align-items: center;
+      min-height: calc(100% - 3.5rem);
+    }
+  }
+
+  .modal-content {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(20px);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, #1a8cff 0%, #0066cc 100%);
+    color: white;
+    border-bottom: none;
+    padding: 1.5rem 2rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .close {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1) rotate(90deg);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      span {
+        line-height: 1;
+      }
+    }
+  }
+
+  .modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 2rem;
+    background: #ffffff;
+
+    form {
+      width: 100%;
+
+      .mb-3 {
+        justify-content: center;
+        margin-bottom: 1.5rem !important;
+      }
+
+      .input-selector {
+        justify-content: center;
+      }
+
+      .description-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.2rem;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  .modal-footer {
+    background: #f8f9fa;
+    border-top: 1px solid rgba(26, 140, 255, 0.1);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      &.btn-primary {
+        background: linear-gradient(135deg, #1a8cff 0%, #0066cc 100%);
+        border-color: #1a8cff;
+        color: white;
+
+        &:hover {
+          background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+          border-color: #0066cc;
+          box-shadow: 0 6px 20px rgba(26, 140, 255, 0.3);
+        }
+      }
+
+      &.btn-secondary {
+        background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+        border-color: #6c757d;
+        color: white;
+
+        &:hover {
+          background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+          border-color: #5a6268;
+          box-shadow: 0 6px 20px rgba(108, 117, 125, 0.3);
+        }
+      }
+    }
+  }
+}
+
+// Modal backdrop improvements
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+// Form elements modernization
+.input-group {
+  .input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid rgba(26, 140, 255, 0.2);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .form-control {
+    border: 2px solid rgba(26, 140, 255, 0.2);
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #ffffff;
+
+    &:focus {
+      border-color: #1a8cff;
+      box-shadow: 0 0 0 3px rgba(26, 140, 255, 0.1);
+      outline: none;
+      background: #ffffff;
+    }
+
+    &::placeholder {
+      color: #adb5bd;
+      font-style: italic;
+    }
+  }
+
+  &:focus-within {
+    .input-group-text {
+      border-color: #1a8cff;
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    }
+  }
+}
+
+// Select elements modernization
+select {
+  border: 2px solid rgba(26, 140, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+
+  &:focus {
+    border-color: #1a8cff;
+    box-shadow: 0 0 0 3px rgba(26, 140, 255, 0.1);
+    outline: none;
+  }
+
+  &:hover {
+    border-color: rgba(26, 140, 255, 0.4);
+    box-shadow: 0 2px 8px rgba(26, 140, 255, 0.1);
+  }
+}
+
+// Textarea modernization
+textarea.form-control {
+  border: 2px solid rgba(26, 140, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 80px;
+  transition: all 0.3s ease;
+  background: #ffffff;
+
+  &:focus {
+    border-color: #1a8cff;
+    box-shadow: 0 0 0 3px rgba(26, 140, 255, 0.1);
+    outline: none;
+  }
+
+  &:hover {
+    border-color: rgba(26, 140, 255, 0.4);
+    box-shadow: 0 2px 8px rgba(26, 140, 255, 0.1);
+  }
+}
+
+// Form switch modernization
+.form-check.form-switch {
+  .form-check-input {
+    width: 3rem;
+    height: 1.5rem;
+    border: 2px solid rgba(26, 140, 255, 0.3);
+    background-color: #e9ecef;
+    border-radius: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:checked {
+      background-color: #1a8cff;
+      border-color: #1a8cff;
+      box-shadow: 0 0 0 3px rgba(26, 140, 255, 0.1);
+    }
+
+    &:focus {
+      border-color: #1a8cff;
+      box-shadow: 0 0 0 3px rgba(26, 140, 255, 0.1);
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .form-check-label {
+    font-weight: 600;
+    color: #495057;
+    margin-left: 1rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #1a8cff;
+    }
+  }
+}
+
+// Academic year tag modernization
+#current-academic-year-tag {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  color: #1565c0;
+  font-weight: 700;
+  border: 2px solid rgba(26, 140, 255, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(26, 140, 255, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(26, 140, 255, 0.2);
+  }
+}
+
+// Error feedback modernization
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(220, 53, 69, 0.05);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+
+  &.selector {
+    justify-content: center;
+    text-align: center;
+  }
+
+  &.inputfield {
+    justify-content: flex-end;
+    text-align: right;
+  }
+}
+
+// Specific modal element improvements
+#plotting-button,
+#data-input-button {
+  background: linear-gradient(135deg, #1a8cff 0%, #0066cc 100%);
+  border: 2px solid #1a8cff;
+  font-weight: 600;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    border-color: #0066cc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 140, 255, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Modal size optimizations
+@media (max-width: 768px) {
+  .modal {
+    .modal-dialog {
+      margin: 1rem;
+      max-width: calc(100% - 2rem);
+    }
+
+    .modal-content {
+      border-radius: 12px;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+      padding: 1rem 1.5rem;
+    }
+  }
+}
