@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>Grandiose Graphs</title>
         
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -215,7 +216,7 @@
       <a 
           href="/"
           class="navbar-logo  mb-0 h1">
-      <img class="d-line-block align-top" src="https://www.vhv.rs/dpng/d/529-5295759_g-logo-blue-png-png-download-logo-g.png" alt="" >
+      <img class="d-line-block align-top" src="img/logo.png" alt="Grandiose Graphs Logo" >
       </a>
       <button 
       type="button"
@@ -237,7 +238,7 @@
               </li>
               <li class="nav-item ">
                   <span  class="nav-link" data-toggle="modal" data-target="#dataInputModal">
-                  Input Data
+                  Input / Edit Data
                   </span>
               </li>
           </ul>
@@ -322,18 +323,112 @@
 
 
 <section id="interactive-area">
-<div id="chart-div"></div>
-<div class="spinner-border" role="status" id="loading-element"></div>
-<div id="confirmation-message-area" style="display: none;">
-   <h1><i class="fa-regular fa-circle-check"></i></h1> 
-    <span id="confirmation-message"><h1>Your SLO Data has been saved!</h1></span>
-</div>
-<div id="error-message-area" style="display: none;" >
-   <h1><i class="fa-regular fa-circle-xmark"></i></h1> 
-    <span id="error-message"><h1>Your SLO Data has not been saved</h1></span>
-</div>
-  <div id="dashboard-logo">
-    <img  src="/img/logo.png" alt="logo" >
+  <div class="landing-page-wrapper">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 class="hero-title">Class Assessment Data Visualizer</h1>
+          <p class="hero-subtitle">Visualize student assessment results over time and keep your department's data organized, comparable, and easy to explain.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary btn-lg hero-btn" onclick="document.querySelector('[data-target=\'#plottingModal\']').click()">
+              Plot Data
+            </button>
+            <button class="btn btn-outline-primary btn-lg hero-btn" onclick="document.querySelector('[data-target=\'#dataInputModal\']').click()">
+              Input / Edit Data
+            </button>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="preview-card">
+            <div class="chart-preview">
+              <svg width="200" height="120" viewBox="0 0 200 120">
+                <defs>
+                  <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#1a8cff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#0066cc;stop-opacity:0.8" />
+                  </linearGradient>
+                </defs>
+                <rect x="20" y="20" width="160" height="80" fill="rgba(255,255,255,0.1)" stroke="#1a8cff" stroke-width="1" rx="4"/>
+                <line x1="20" y1="100" x2="180" y2="100" stroke="#666" stroke-width="1"/>
+                <line x1="20" y1="20" x2="20" y2="100" stroke="#666" stroke-width="1"/>
+                <polyline points="30,80 50,70 70,75 90,60 110,50 130,40 150,35 170,30" fill="none" stroke="#1a8cff" stroke-width="2"/>
+                <circle cx="30" cy="80" r="3" fill="#1a8cff"/>
+                <circle cx="50" cy="70" r="3" fill="#1a8cff"/>
+                <circle cx="70" cy="75" r="3" fill="#1a8cff"/>
+                <circle cx="90" cy="60" r="3" fill="#1a8cff"/>
+                <circle cx="110" cy="50" r="3" fill="#1a8cff"/>
+                <circle cx="130" cy="40" r="3" fill="#1a8cff"/>
+                <circle cx="150" cy="35" r="3" fill="#1a8cff"/>
+                <circle cx="170" cy="30" r="3" fill="#1a8cff"/>
+              </svg>
+            </div>
+            <p class="preview-caption">Example trend preview (not real data)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works Section -->
+    <section class="how-it-works">
+      <h2 class="section-title">How it works</h2>
+      <div class="cards-container">
+        <div class="work-card">
+          <div class="card-number">1</div>
+          <h3>Choose what to show</h3>
+          <p>Select a Student Learning Objective (SLO), a Measure (what's assessed), and the academic years you want to compare.</p>
+        </div>
+        <div class="work-card">
+          <div class="card-number">2</div>
+          <h3>See the trend</h3>
+          <p>Press Plot to render the graph. You can show one or both targets, and tweak simple display options (like line/point size or colors).</p>
+        </div>
+        <div class="work-card">
+          <div class="card-number">3</div>
+          <h3>Keep it current</h3>
+          <p>Use Input / Edit Data to add new assessment results or update past entries so your plots stay accurate over time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What you'll pick Section -->
+    <section class="what-youll-pick">
+      <h2 class="section-title">What you'll pick</h2>
+      <div class="glossary-chips">
+        <div class="glossary-chip">
+          <h4>Student Learning Objective (SLO)</h4>
+          <p>What skill or outcome the course is aiming to develop.</p>
+          <div class="example">Example: "S1 — Algorithmic Problem Solving."</div>
+        </div>
+        <div class="glossary-chip">
+          <h4>Measure</h4>
+          <p>How the outcome is tested or observed.</p>
+          <div class="example">Example: "ETS Major Field Test."</div>
+        </div>
+        <div class="glossary-chip">
+          <h4>Academic Years (Dates)</h4>
+          <p>Full-year ranges shown on the plot.</p>
+          <div class="example">Example: "2017&ndash;2018 to 2025&ndash;2026"</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+      <p class="footer-text">Loads in ≤3s. Plots in ≤4s. Designed for long-term retention and clear faculty review.</p>
+      <p class="version-text">Grandiose Graphs • MSU CS</p>
+    </footer>
+  </div>
+
+  <div id="chart-div"></div>
+  <div class="spinner-border" role="status" id="loading-element"></div>
+  <div id="confirmation-message-area" style="display: none;">
+     <h1><i class="fa-regular fa-circle-check"></i></h1> 
+      <span id="confirmation-message"><h1>Your SLO Data has been saved!</h1></span>
+  </div>
+  <div id="error-message-area" style="display: none;" >
+     <h1><i class="fa-regular fa-circle-check"></i></h1> 
+      <span id="error-message"><h1>Your SLO Data has not been saved</h1></span>
   </div>
 </section>
 

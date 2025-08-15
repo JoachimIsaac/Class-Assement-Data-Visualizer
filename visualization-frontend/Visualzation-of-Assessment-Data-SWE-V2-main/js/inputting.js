@@ -129,7 +129,7 @@ function revealDashboardLogo(dashboardLogo) {
 
     setTimeout(() => {
 
-        dashboardLogo.style.display = "block";
+        dashboardLogo.style.display = "flex";
 
     }, 2000);
     

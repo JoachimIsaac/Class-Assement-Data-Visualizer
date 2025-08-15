@@ -152,6 +152,16 @@
                 left: 100%;
               }
             }
+
+            &:focus {
+              outline: 2px solid #ffd700;
+              outline-offset: 2px;
+              font-weight: 600;
+              color: #ffd700;
+              background: rgba(255, 255, 255, 0.1);
+              transform: translateY(-1px);
+              box-shadow: 0 4px 16px rgba(255, 215, 0, 0.2);
+            }
           }
         }
       }
@@ -169,7 +179,7 @@
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   width: 100%;
   position: absolute;
-  margin-top: 70px;
+  margin-top: var(--nav-h);
   z-index: 3;
   padding: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -178,12 +188,12 @@
   // Mobile responsive adjustments
   @media (max-width: 768px) {
     padding: 12px;
-    margin-top: 60px;
+    margin-top: calc(var(--nav-h) - 10px);
   }
 
   @media (max-width: 480px) {
     padding: 8px;
-    margin-top: 55px;
+    margin-top: calc(var(--nav-h) - 15px);
   }
 
   .control-options {

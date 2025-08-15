@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 //Resets selected SLO to it's default selection.
 var clearPlotSloSelector = clearInputSloSelector;
 
-const dashboardLogo = document.getElementById('dashboard-logo');
+const dashboardLogo = document.querySelector('.landing-page-wrapper');
 const chartContainer = document.getElementById('chart-div');
 const loadingElement = document.getElementById('loading-element');
 
@@ -200,7 +200,7 @@ function hideAllSelectorErrors(sloSelector, measureSelector, startDateSelector, 
 
 
 
-//Hides the dashboard logo.
+//Hides the landing page.
 function hideDashboardLogo(dashboardLogo) {
 
     dashboardLogo.style.display = "none";
@@ -1538,6 +1538,14 @@ plottingModalPlotButton.addEventListener('click', async () => {
 
     }
 
+});
+
+// Add keyboard support for the Plot button
+plottingModalPlotButton.addEventListener('keydown', async (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        plottingModalPlotButton.click();
+    }
 });
 
 
