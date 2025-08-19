@@ -9,7 +9,7 @@ var clearPlotSloSelector = clearInputSloSelector;
 
 const dashboardLogo = document.querySelector('.landing-page-wrapper');
 const chartContainer = document.getElementById('chart-div');
-const loadingElement = document.getElementById('loading-element');
+// Loading element is now handled by the LoadingOverlay system
 
 
 ///////////////////////////////////////////////Plotting Modal Elements////////////////////////////////////
@@ -59,7 +59,6 @@ const displayElements = {
     dashboardLogo: dashboardLogo,
     plottingModalCloseButton: plottingModalCloseButton,
     chartContainer: chartContainer,
-    loadingElement:loadingElement,
     plotSettingsContainer: plotSettingsContainer,
     targetPlotOptionButtonBoth: targetPlotOptionButtonBoth,
     targetPlotOptionButtonT1:targetPlotOptionButtonT1,
@@ -289,7 +288,7 @@ async function plotTransitionEditedTargets(plotDataUrl,displayElements) {
         
     }
      
-    await displayLoadingAnimation(displayElements.loadingElement);
+    window.AppLoader.showLoading('Fetching plot data...');
 
     
     if (bothTargetsRadioButttonChecked(displayElements.targetPlotRadioButtonBoth)) {
@@ -333,7 +332,7 @@ async function plotTransitionBothTargets(plotDataUrl,displayElements) {
 
     }
      
-    await displayLoadingAnimation(displayElements.loadingElement);
+    window.AppLoader.showLoading('Fetching plot data...');
 
     await plotChartWithBothTargets(plotDataUrl);
 
@@ -367,7 +366,7 @@ async function plotTransitionSingleTarget(plotDataUrl,displayElements) {
 
     }
 
-    await displayLoadingAnimation(displayElements.loadingElement);
+    window.AppLoader.showLoading('Fetching plot data...');
 
     await plotChartBasedOnTargets(plotDataUrl, "T1");
 
@@ -390,6 +389,8 @@ async function plotTransitionSingleTarget(plotDataUrl,displayElements) {
 
 //Handles plotting when a color is selected/changed.
 async function plotTransitionEditedTargetColors(plotDataUrl,displayElements) {
+
+    window.AppLoader.showLoading('Updating chart colors...');
 
     if (bothTargetsRadioButttonChecked(displayElements.targetPlotRadioButtonBoth)) {
 
@@ -420,6 +421,8 @@ async function plotTransitionEditedTargetColors(plotDataUrl,displayElements) {
 //Handles plotting when the linesize of a target is selected/changed.
 async function plotTransitonEditedGraphLineSize(plotDataUrl,displayElements) {
 
+    window.AppLoader.showLoading('Updating line size...');
+
     if (bothTargetsRadioButttonChecked(displayElements.targetPlotRadioButtonBoth)) {
 
         await plotChartWithBothTargets(plotDataUrl);
@@ -448,6 +451,8 @@ async function plotTransitonEditedGraphLineSize(plotDataUrl,displayElements) {
 
 //Handles plotting when the point size of a target is selected/changed.
 async function plotTransitionEditedGraphPointSize(plotDataUrl,displayElements) {
+
+    window.AppLoader.showLoading('Updating point size...');
 
     if (bothTargetsRadioButttonChecked(displayElements.targetPlotRadioButtonBoth)) {
 
@@ -662,6 +667,11 @@ function plotChartWithBothTargets(requestUrl) {
         let plottingDataObj;
         let pickedColors = [t1Color, t2Color];
 
+        // Update loading message to show chart is being drawn
+        if (window.AppLoader) {
+            window.AppLoader.showLoading('Drawing chart...');
+        }
+
         axios.get(requestUrl).then(response => {
         
         plottingDataObj = response.data;
@@ -673,7 +683,13 @@ function plotChartWithBothTargets(requestUrl) {
             d3.select('#chart-div').selectAll('*').remove();
             
             const data = loadDataTableBothTargets(plottingDataObj);
-            if (data.length === 0) return;
+            if (data.length === 0) {
+                // Hide loading if no data
+                if (window.AppLoader) {
+                    window.AppLoader.hideLoading();
+                }
+                return;
+            }
             
             // Skip header row and prepare data for D3
             const chartData = data.slice(1).map(row => ({
@@ -942,6 +958,11 @@ function plotChartWithBothTargets(requestUrl) {
             function hideTooltip() {
                 tooltip.style('opacity', 0);
             }
+            
+            // Hide loading after chart is fully drawn
+            if (window.AppLoader) {
+                window.AppLoader.hideLoading();
+            }
         }
         
     });
@@ -965,6 +986,10 @@ function plotChartBasedOnTargets(requestUrl, target) {
         let plottingDataObj;
         let pickedColors = target == "T1" ? [t1Color, t1Color] : [t2Color, t2Color];
 
+        // Update loading message to show chart is being drawn
+        if (window.AppLoader) {
+            window.AppLoader.showLoading('Drawing chart...');
+        }
 
     axios.get(requestUrl).then(response => {
         
@@ -978,7 +1003,13 @@ function plotChartBasedOnTargets(requestUrl, target) {
             d3.select('#chart-div').selectAll('*').remove();
             
             const data = loadDataTableBasedOnTargets(plottingDataObj, target);
-            if (data.length === 0) return;
+            if (data.length === 0) {
+                // Hide loading if no data
+                if (window.AppLoader) {
+                    window.AppLoader.hideLoading();
+                }
+                return;
+            }
             
             // Skip header row and prepare data for D3
             const chartData = data.slice(1).map(row => ({
@@ -1224,6 +1255,11 @@ function plotChartBasedOnTargets(requestUrl, target) {
             function hideTooltip() {
                 tooltip.style('opacity', 0);
             }
+            
+            // Hide loading after chart is fully drawn
+            if (window.AppLoader) {
+                window.AppLoader.hideLoading();
+            }
         }
      
     });
@@ -1233,27 +1269,7 @@ function plotChartBasedOnTargets(requestUrl, target) {
 
 
 
-//Remove the loading element from the screen (spinning element for loading screen)
-function clearloadingElement(loadingElement) {
-
-    loadingElement.style.display = "none";
-
-}
-
-
-
-//Display the loading element from the screen (spinning element for loading screen)
-function displayLoadingAnimation(loadingElement) {
-
-    loadingElement.style.display = "block";
-
-    setTimeout(() => {
-         
-        clearloadingElement(loadingElement);
-
-     }, 2000);
-    
-}
+// Loading is now handled by the LoadingOverlay system
  
 
 
@@ -1387,6 +1403,7 @@ targetPlotRadioButtonBoth.addEventListener('change', async () => {
     // Update plot context before re-plotting
     updatePlotContextFromSelections();
 
+    window.AppLoader.showLoading('Switching to both targets...');
     plotTransitionEditedTargets(plotDataUrl,displayElements);
     displayColorSelectorT1(targetPlotColorOptionButtonT1);
     displayColorSelectorT2(targetPlotColorOptionButtonT2);
@@ -1403,6 +1420,7 @@ targetPlotRadioButtonT1.addEventListener('change', async () => {
     // Update plot context before re-plotting
     updatePlotContextFromSelections();
 
+    window.AppLoader.showLoading('Switching to Target 1...');
     plotTransitionEditedTargets(plotDataUrl,displayElements);
     displayColorSelectorT1(targetPlotColorOptionButtonT1);
     hideColorSelectorT2(targetPlotColorOptionButtonT2);
@@ -1419,6 +1437,7 @@ targetPlotRadioButtonT2.addEventListener('change', async () => {
     // Update plot context before re-plotting
     updatePlotContextFromSelections();
 
+    window.AppLoader.showLoading('Switching to Target 2...');
     plotTransitionEditedTargets(plotDataUrl,displayElements);
     hideColorSelectorT1(targetPlotColorOptionButtonT1); 
     displayColorSelectorT2(targetPlotColorOptionButtonT2);
@@ -1435,6 +1454,7 @@ targetPlotColorRadioButtonT1.addEventListener('change', async () => {
     // Update plot context before re-plotting
     updatePlotContextFromSelections();
 
+    window.AppLoader.showLoading('Updating Target 1 color...');
     plotTransitionEditedTargetColors(plotDataUrl,displayElements);
     
 });
@@ -1449,6 +1469,7 @@ targetPlotColorRadioButtonT2.addEventListener('change', async () => {
     // Update plot context before re-plotting
     updatePlotContextFromSelections();
 
+    window.AppLoader.showLoading('Updating Target 2 color...');
     plotTransitionEditedTargetColors(plotDataUrl,displayElements);
     
 });
@@ -1463,6 +1484,7 @@ pointSizeSelector.addEventListener('change', async () => {
     // Update plot context before re-plotting
     updatePlotContextFromSelections();
 
+    window.AppLoader.showLoading('Updating point size...');
     plotTransitionEditedGraphPointSize(plotDataUrl,displayElements);
     
 });
@@ -1477,6 +1499,7 @@ lineSizeSelector.addEventListener('change', async () => {
     // Update plot context before re-plotting
     updatePlotContextFromSelections();
 
+    window.AppLoader.showLoading('Updating line size...');
     plotTransitonEditedGraphLineSize(plotDataUrl,displayElements);
     
 });
@@ -1509,6 +1532,8 @@ plottingModalPlotButton.addEventListener('click', async () => {
 
         // Update plot context before plotting
         updatePlotContextFromSelections();
+        
+        window.AppLoader.showLoading('Checking available targets...');
         
         axios.get(`http://127.0.0.1:8000/target/T2/exist/${currentSelectedSlo}/${currentSelectedMeasure}`).then((response) => {
             
@@ -1556,4 +1581,26 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePlotContextDisplay();
 });
 
-export {loadingElement,displayLoadingAnimation,dashboardLogo,hideDashboardLogo};
+// Function to reset plotting screen to home state
+function resetPlottingScreen() {
+    // Clear chart
+    const chartContainer = document.getElementById('chart-div');
+    if (chartContainer && chartContainer.children.length > 0) {
+        chartContainer.innerHTML = '';
+        chartContainer.style.display = 'none';
+    }
+    
+    // Hide plot settings
+    const plotSettingsContainer = document.getElementById('settings-container');
+    if (plotSettingsContainer) {
+        plotSettingsContainer.style.display = 'none';
+    }
+    
+    // Show landing page
+    const dashboardLogo = document.querySelector('.landing-page-wrapper');
+    if (dashboardLogo) {
+        dashboardLogo.style.display = 'flex';
+    }
+}
+
+export {dashboardLogo,hideDashboardLogo,resetPlottingScreen};

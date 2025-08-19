@@ -1,4 +1,4 @@
-import { loadingElement, displayLoadingAnimation, dashboardLogo, hideDashboardLogo } from '/js/plotting.js'
+import { dashboardLogo, hideDashboardLogo, resetPlottingScreen } from '/js/plotting.js'
 
 import { clearInputSloSelector, clearInputMeasureSelector, clearInputTargetSelector, hideAllInputModalSelectorErrors, modalInputAcademicTermTag } from '/js/inputModal.js';
 
@@ -631,18 +631,23 @@ function showErrorInvalidInputFields(inputFields) {
 
 
 //Starts the animations of what should happend after information is saved correctly.
-async function saveTransition(inputFields,dashboardLogo,loadingElement,messageArea) {
+async function saveTransition(inputFields,dashboardLogo,messageArea) {
     
     await closeInputModal();
     await hideDashboardLogo(dashboardLogo);
-    await displayLoadingAnimation(loadingElement);
+    window.AppLoader.showLoading('Saving SLO data...');
     await revealMessageArea(messageArea);
 
     setTimeout(async () => {
         await hideMessageArea(messageArea);
-        await displayLoadingAnimation(loadingElement);
+        window.AppLoader.showLoading('Loading dashboard...');
+        
+        // Reset plotting screen to home state
+        resetPlottingScreen();
+        
         await revealDashboardLogo(dashboardLogo);
         await clearAllInputModalData(inputFields);
+        window.AppLoader.hideLoading();
         
     }, 5200);
 
@@ -718,18 +723,18 @@ function generateInputData(inputFields) {
 
 
 //Creates a post request and pots the data in to the database and runs the save animation.
-function postDataToDB(options, inputFields, dashboardLogo, loadingElement, confirmationMessageArea, errorMessageArea) {
+function postDataToDB(options, inputFields, dashboardLogo, confirmationMessageArea, errorMessageArea) {
                 
     axios(options).then((response) => {
     
-        saveTransition(inputFields, dashboardLogo, loadingElement, confirmationMessageArea);
+        saveTransition(inputFields, dashboardLogo, confirmationMessageArea);
         
     }).catch((error) => {
             
         const status = error.response.status;
         const genericMessage = error.message;
 
-        saveTransition(inputFields, dashboardLogo, loadingElement, errorMessageArea);
+        saveTransition(inputFields, dashboardLogo, errorMessageArea);
         printErrorToConsole(status, genericMessage);
         
     });
@@ -739,18 +744,18 @@ function postDataToDB(options, inputFields, dashboardLogo, loadingElement, confi
 
 
 //Creates a put request and puts the data into the database and runs the save animation.
-function putDataToDB(options, inputFields, dashboardLogo, loadingElement, confirmationMessageArea, errorMessageArea) {
+function putDataToDB(options, inputFields, dashboardLogo, confirmationMessageArea, errorMessageArea) {
         
     axios(options).then((response) => {//handle what happends next based on status
         
-        saveTransition(inputFields, dashboardLogo, loadingElement, confirmationMessageArea);
+        saveTransition(inputFields, dashboardLogo, confirmationMessageArea);
 
     }).catch((error) => {
         
        const status = error.response.status;
        const genericMessage = error.message;
 
-       saveTransition(inputFields, dashboardLogo, loadingElement, errorMessageArea);
+               saveTransition(inputFields, dashboardLogo, errorMessageArea);
        printErrorToConsole(status, genericMessage);
         
     });
@@ -838,7 +843,7 @@ saveButton.addEventListener("click", async () => {
             };
             
 
-            postDataToDB(options, inputFields, dashboardLogo, loadingElement, confirmationMessageArea, errorMessageArea);
+            postDataToDB(options, inputFields, dashboardLogo, confirmationMessageArea, errorMessageArea);
 
 
         }
@@ -860,7 +865,7 @@ saveButton.addEventListener("click", async () => {
 
             };
             
-            putDataToDB(options,inputFields,dashboardLogo,loadingElement,confirmationMessageArea, errorMessageArea);
+            putDataToDB(options,inputFields,dashboardLogo,confirmationMessageArea, errorMessageArea);
 
         }       
 

@@ -2,6 +2,7 @@
 @import "components/navbar";
 @import "components/modal";
 @import "components/plot-context";
+@import "components/loading";
 
 :root {
   --nav-h: 70.5px;
@@ -85,12 +86,7 @@ body{
 }
 
 
-#loading-element{
-    display: none;
-    width: 4rem;
-    height: 4rem;
-    color: #1a8cff;
-}
+
 
 
 #chart-div{

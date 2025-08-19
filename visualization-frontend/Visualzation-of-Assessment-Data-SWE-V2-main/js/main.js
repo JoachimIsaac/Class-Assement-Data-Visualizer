@@ -5,6 +5,7 @@ import '/js/plotModal.js';
 import '/js/inputModal.js';
 import '/js/inputting.js';
 import '/js/plotting.js';
+import { showLoading, hideLoading, withLoading, fetchWithLoader } from './ui/loading.js';
 
 // Mark app as ready after CSS and fonts are loaded to prevent FOUC
 const markReady = () => document.body.classList.add('ready');
@@ -14,5 +15,8 @@ if (document.readyState === 'complete') {
 } else {
   window.addEventListener('load', () => (document.fonts?.ready || Promise.resolve()).then(markReady));
 }
+
+// Export loading functions globally for easy access
+window.AppLoader = { showLoading, hideLoading, withLoading, fetchWithLoader };
 
 
