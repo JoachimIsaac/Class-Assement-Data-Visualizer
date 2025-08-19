@@ -1,0 +1,137 @@
+/* Critical CSS - Inline this in production builds */
+:root {
+  --nav-h: 70.5px;
+}
+
+html, body { 
+  margin: 0; 
+  padding: 0; 
+  min-height: 100%; 
+}
+
+body { 
+  background-color: #efefef;
+  overflow: hidden;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+#interactive-area {
+  width: 100%;
+  height: calc(100vh - var(--nav-h));
+  margin-top: var(--nav-h);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: absolute;
+}
+
+.landing-page-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.hero-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0 2rem 0;
+  min-height: 0;
+}
+
+.hero-content {
+  display: flex;
+  width: 100%;
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero-left {
+  flex: 2;
+  max-width: 600px;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  min-width: 140px;
+}
+
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(26, 140, 255, 0.15);
+  border: 1px solid rgba(26, 140, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.chart-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.chart-preview svg {
+  aspect-ratio: 200 / 120;
+  width: 200px;
+  height: 120px;
+}
+
+/* Performance optimizations */
+.no-transition * { 
+  transition: none !important; 
+}
+
+@media (prefers-reduced-motion: reduce) { 
+  * { 
+    animation-duration: 0.001ms !important; 
+    animation-iteration-count: 1 !important; 
+    transition-duration: 0.001ms !important; 
+  } 
+}
