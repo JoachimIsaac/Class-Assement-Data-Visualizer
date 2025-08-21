@@ -1,0 +1,688 @@
+{
+    "_default": {
+        "6": {
+            "S1": {
+                "description": "Program Development",
+                "M1": {
+                    "description": "ETS Major Field Test",
+                    "T1": {
+            "17-18": {"target": 50, "num_student": 26, "num_student_met": 15, "percentage": 58, "description": "Group avg > 50%"},
+            "18-19": {"target": 50, "num_student": 26, "num_student_met": 17, "percentage": 65, "description": "Group avg > 50%"},
+            "19-20": {"target": 50, "num_student": 26, "num_student_met": 21, "percentage": 81, "description": "Group avg > 50%"},
+            "20-21": {"target": 50, "num_student": 26, "num_student_met": 19, "percentage": 73, "description": "Group avg ≥ 50%"},
+            "21-22": {"target": 50, "num_student": 28, "num_student_met": 24, "percentage": 86, "description": "Group avg > 50%"},
+            "25-26": {"target": 50, "num_student": 15, "num_student_met": 10, "percentage": 67, "description": "Group avg ≥ 50%"}
+                         },
+          "T2": {
+            "17-18": {"target": 100, "num_student": 26, "num_student_met": 18, "percentage": 69, "description": "students ≤ 30 percentile"},
+            "18-19": {"target": 100, "num_student": 26, "num_student_met": 22, "percentage": 85, "description": "100% of students ≥ 30 percentile"},
+            "19-20": {"target": 100, "num_student": 26, "num_student_met": 20, "percentage": 77, "description": "students ≤ 30 percentile"},
+            "20-21": {"target": 100, "num_student": 26, "num_student_met": 23, "percentage": 88, "description": "students ≤ 30 percentile"},
+            "25-26": {"target": 100, "num_student": 11, "num_student_met": 11, "percentage": 100, "description": "100% of students ≥ 30 percentile"}
+                }
+                },
+                "M2": {
+                    "description": "Design-Problem Solving \u00e2\u20ac\u201c Recall",
+                    "T1": {
+                        "17-18": {
+                            "target": 90,
+                            "num_student": 114,
+                            "num_student_met": 79,
+                            "percentage": 69,
+                            "description": "recall most steps in design/algorithm"
+                        },
+                        "18-19": {
+                            "target": 90,
+                            "num_student": 114,
+                            "num_student_met": 86,
+                            "percentage": 75,
+                            "description": "recall most steps in design/algorithm"
+                        },
+                        "19-20": {
+                            "target": 90,
+                            "num_student": 114,
+                            "num_student_met": 92,
+                            "percentage": 81,
+                            "description": "recall most steps in design/algorithm"
+                        },
+                        "20-21": {
+                            "target": 90,
+                            "num_student": 114,
+                            "num_student_met": 88,
+                            "percentage": 77,
+                            "description": "recall most steps in design/algorithm"
+                        }
+                    },
+                    "T2": {
+                        "17-18": {
+                            "target": 80,
+                            "num_student": 114,
+                            "num_student_met": 78,
+                            "percentage": 68,
+                            "description": "recall all steps in design/algorithm"
+                        },
+                        "18-19": {
+                            "target": 80,
+                            "num_student": 114,
+                            "num_student_met": 82,
+                            "percentage": 72,
+                            "description": "recall all steps in design/algorithm"
+                        },
+                        "19-20": {
+                            "target": 80,
+                            "num_student": 114,
+                            "num_student_met": 96,
+                            "percentage": 84,
+                            "description": "recall all steps in design/algorithm"
+                        },
+                        "20-21": {
+                            "target": 80,
+                            "num_student": 114,
+                            "num_student_met": 91,
+                            "percentage": 80,
+                            "description": "recall all steps in design/algorithm"
+                        }
+                    }
+                },
+                "M3": {
+                    "description": "Design-Problem Solving \u00e2\u20ac\u201c Apply",
+                    "T1": {
+                        "17-18": {
+                            "target": 80,
+                            "num_student": 210,
+                            "num_student_met": 145,
+                            "percentage": 69,
+                            "description": "score 7-10"
+                        },
+                        "18-19": {
+                            "target": 80,
+                            "num_student": 210,
+                            "num_student_met": 152,
+                            "percentage": 72,
+                            "description": "score 7-10"
+                        },
+                        "19-20": {
+                            "target": 80,
+                            "num_student": 210,
+                            "num_student_met": 160,
+                            "percentage": 76,
+                            "description": "score 7-10"
+                        },
+                        "20-21": {
+                            "target": 80,
+                            "num_student": 210,
+                            "num_student_met": 155,
+                            "percentage": 74,
+                            "description": "score 7-10"
+                        }
+                    },
+                    "T2": {
+                        "17-18": {
+                            "target": 50,
+                            "num_student": 210,
+                            "num_student_met": 105,
+                            "percentage": 50,
+                            "description": "score 9-10"
+                        },
+                        "18-19": {
+                            "target": 50,
+                            "num_student": 210,
+                            "num_student_met": 112,
+                            "percentage": 53,
+                            "description": "score 9-10"
+                        },
+                        "19-20": {
+                            "target": 50,
+                            "num_student": 210,
+                            "num_student_met": 118,
+                            "percentage": 56,
+                            "description": "score 9-10"
+                        },
+                        "20-21": {
+                            "target": 70,
+                            "num_student": 210,
+                            "num_student_met": 130,
+                            "percentage": 62,
+                            "description": "score 9-10"
+                        }
+                    }
+                },
+                "M14": {
+                    "description": "Indirect Measures",
+                    "T1": {
+                        "17-18": {
+                            "target": 70,
+                            "num_student": 143,
+                            "num_student_met": 96,
+                            "percentage": 67,
+                            "description": "good or excellent in improvement"
+                        },
+                        "18-19": {
+                            "target": 70,
+                            "num_student": 143,
+                            "num_student_met": 101,
+                            "percentage": 71,
+                            "description": "good or excellent in improvement"
+                        },
+                        "19-20": {
+                            "target": 70,
+                            "num_student": 143,
+                            "num_student_met": 120,
+                            "percentage": 84,
+                            "description": "good or excellent in improvement"
+                        },
+                        "20-21": {
+                            "target": 70,
+                            "num_student": 143,
+                            "num_student_met": 110,
+                            "percentage": 77,
+                            "description": "good or excellent in improvement"
+                        }
+                    }
+                }
+            },
+            "S2": {
+                "description": "Oral and Written Communication",
+                "M4": {
+                    "description": "Seminar Presentations",
+                    "T1": {
+                        "17-18": {
+                            "target": 100,
+                            "num_student": 25,
+                            "num_student_met": 25,
+                            "percentage": 100,
+                            "description": "improve or achieve 3 on slides"
+                        },
+                        "18-19": {
+                            "target": 100,
+                            "num_student": 25,
+                            "num_student_met": 23,
+                            "percentage": 92,
+                            "description": "improve or achieve 3 on slides"
+                        },
+                        "19-20": {
+                            "target": 70,
+                            "num_student": 25,
+                            "num_student_met": 19,
+                            "percentage": 76,
+                            "description": "improve or achieve 3 on slides"
+                        },
+                        "20-21": {
+                            "target": 100,
+                            "num_student": 26,
+                            "num_student_met": 24,
+                            "percentage": 92,
+                            "description": "improve or achieve 3 on slides"
+                        }
+                    },
+                    "T2": {
+                        "17-18": {
+                            "target": 100,
+                            "num_student": 25,
+                            "num_student_met": 22,
+                            "percentage": 88,
+                            "description": "improve or achieve 3 on style"
+                        },
+                        "18-19": {
+                            "target": 100,
+                            "num_student": 25,
+                            "num_student_met": 23,
+                            "percentage": 92,
+                            "description": "improve or achieve 3 on style"
+                        },
+                        "19-20": {
+                            "target": 70,
+                            "num_student": 25,
+                            "num_student_met": 18,
+                            "percentage": 72,
+                            "description": "improve or achieve 3 on style"
+                        },
+                        "20-21": {
+                            "target": 100,
+                            "num_student": 25,
+                            "num_student_met": 24,
+                            "percentage": 96,
+                            "description": "improve or achieve 3 on style"
+                        },
+                        "21-22": {
+                            "target": 100,
+                            "num_student": 25,
+                            "num_student_met": 22,
+                            "percentage": 88,
+                            "description": "improve or achieve 3 on style"
+                        }
+                    }
+                },
+                "M5": {
+                    "description": "Spelling, Grammar and Phrasing in Written Assignment",
+                    "T1": {
+                        "17-18": {
+                            "target": 80,
+                            "num_student": 30,
+                            "num_student_met": 21,
+                            "percentage": 70,
+                            "description": "10+ on combined score"
+                        },
+                        "18-19": {
+                            "target": 60,
+                            "num_student": 30,
+                            "num_student_met": 20,
+                            "percentage": 67,
+                            "description": "10+ on combined score"
+                        },
+                        "19-20": {
+                            "target": 55,
+                            "num_student": 26,
+                            "num_student_met": 18,
+                            "percentage": 69,
+                            "description": "10+ on combined score"
+                        },
+                        "20-21": {
+                            "target": 80,
+                            "num_student": 28,
+                            "num_student_met": 21,
+                            "percentage": 75,
+                            "description": "10+ on combined score"
+                        }
+                    }
+                },
+                "M6": {
+                    "description": "Writing \u00e2\u20ac\u201c Description of a Structure or Algorithm",
+                    "T1": {
+                        "17-18": {
+                            "target": 80,
+                            "num_student": 26,
+                            "num_student_met": 21,
+                            "percentage": 81,
+                            "description": "score 7-10"
+                        },
+                        "18-19": {
+                            "target": 30,
+                            "num_student": 60,
+                            "num_student_met": 22,
+                            "percentage": 37,
+                            "description": "score 7-10"
+                        },
+                        "19-20": {
+                            "target": 30,
+                            "num_student": 28,
+                            "num_student_met": 27,
+                            "percentage": 96,
+                            "description": "score 7-10"
+                        },
+                        "20-21": {
+                            "target": 70,
+                            "num_student": 28,
+                            "num_student_met": 20,
+                            "percentage": 71,
+                            "description": "score 7-10"
+                        }
+                    }
+                },
+                "M7": {
+                    "description": "Software Engineering Presentation",
+                    "T1": {
+                        "17-18": {
+                            "target": 80,
+                            "num_student": 24,
+                            "num_student_met": 18,
+                            "percentage": 75,
+                            "description": "presentations 80-100%"
+                        },
+                        "18-19": {
+                            "target": 70,
+                            "num_student": 25,
+                            "num_student_met": 25,
+                            "percentage": 100,
+                            "description": "presentations 80-100%"
+                        },
+                        "19-20": {
+                            "target": 80,
+                            "num_student": 25,
+                            "num_student_met": 20,
+                            "percentage": 80,
+                            "description": "presentations 80-100%"
+                        },
+                        "20-21": {
+                            "target": 75,
+                            "num_student": 24,
+                            "num_student_met": 19,
+                            "percentage": 79,
+                            "description": "presentations 80-100%"
+                        }
+                    }
+                },
+                "M14": {
+                    "description": "Indirect Measures",
+                    "T1": {
+                        "17-18": {
+                            "target": 70,
+                            "num_student": 44,
+                            "num_student_met": 31,
+                            "percentage": 70,
+                            "description": "good or excellent in improvement"
+                        },
+                        "18-19": {
+                            "target": 60,
+                            "num_student": 30,
+                            "num_student_met": 22,
+                            "percentage": 73,
+                            "description": "good or excellent in improvement"
+                        },
+                        "19-20": {
+                            "target": 55,
+                            "num_student": 26,
+                            "num_student_met": 18,
+                            "percentage": 69,
+                            "description": "good or excellent in improvement"
+                        },
+                        "20-21": {
+                            "target": 80,
+                            "num_student": 28,
+                            "num_student_met": 22,
+                            "percentage": 79,
+                            "description": "good or excellent in improvement"
+                        }
+                    }
+                }
+            },
+            "S3": {
+                "description": "Working in Teams",
+                "M8": {
+                    "description": "Peer Evaluation",
+                    "T1": {
+                        "17-18": {
+                            "target": 90,
+                            "num_student": 21,
+                            "num_student_met": 17,
+                            "percentage": 81,
+                            "description": "contribute fairly to projects"
+                        },
+                        "18-19": {
+                            "target": 75,
+                            "num_student": 24,
+                            "num_student_met": 21,
+                            "percentage": 88,
+                            "description": "contribute to projects"
+                        },
+                        "19-20": {
+                            "target": 73,
+                            "num_student": 50,
+                            "num_student_met": 36,
+                            "percentage": 72,
+                            "description": "Contribute fairly to projects"
+                        },
+                        "20-21": {
+                            "target": 80,
+                            "num_student": 45,
+                            "num_student_met": 31,
+                            "percentage": 69,
+                            "description": "Contribute fairly to projects"
+                        }
+                    },
+                    "T2": {
+                        "17-18": {
+                            "target": 40,
+                            "num_student": 21,
+                            "num_student_met": 19,
+                            "percentage": 90,
+                            "description": "contribute fairly to projects"
+                        },
+                        "18-19": {
+                            "target": 50,
+                            "num_student": 24,
+                            "num_student_met": 24,
+                            "percentage": 100,
+                            "description": "students met minimum of contribution"
+                        },
+                        "19-20": {
+                            "target": 30,
+                            "num_student": 50,
+                            "num_student_met": 40,
+                            "percentage": 80,
+                            "description": "Students work well with peers"
+                        },
+                        "20-21": {
+                            "target": 25,
+                            "num_student": 45,
+                            "num_student_met": 27,
+                            "percentage": 60,
+                            "description": "Students meet contribution expectations"
+                        }
+                    }
+                },
+                "M9": {
+                    "description": "Objective Evaluation",
+                    "T1": {
+                        "17-18": {
+                            "target": 90,
+                            "num_student": 21,
+                            "num_student_met": 14,
+                            "percentage": 67,
+                            "description": "contribute with score > 85%"
+                        },
+                        "18-19": {
+                            "target": 30,
+                            "num_student": 24,
+                            "num_student_met": 22,
+                            "percentage": 92,
+                            "description": "Meets rubric threshold"
+                        },
+                        "19-20": {
+                            "target": 71,
+                            "num_student": 57,
+                            "num_student_met": 34,
+                            "percentage": 60,
+                            "description": "Meets rubric threshold"
+                        },
+                        "20-21": {
+                            "target": 32,
+                            "num_student": 20,
+                            "num_student_met": 14,
+                            "percentage": 70,
+                            "description": "Meets rubric threshold"
+                        }
+                    },
+                    "T2": {
+                        "17-18": {
+                            "target": 70,
+                            "num_student": 50,
+                            "num_student_met": 47,
+                            "percentage": 94,
+                            "description": "Meets rubric threshold"
+                        },
+                        "18-19": {
+                            "target": 30,
+                            "num_student": 24,
+                            "num_student_met": 24,
+                            "percentage": 100,
+                            "description": "Meets rubric threshold"
+                        },
+                        "19-20": {
+                            "target": 40,
+                            "num_student": 57,
+                            "num_student_met": 27,
+                            "percentage": 47,
+                            "description": "Meets rubric threshold"
+                        },
+                        "20-21": {
+                            "target": 30,
+                            "num_student": 20,
+                            "num_student_met": 17,
+                            "percentage": 85,
+                            "description": "Meets rubric threshold"
+                        }
+                    }
+                },
+                "M10": {
+                    "description": "Partner Assignment",
+                    "T1": {
+                        "17-18": {
+                            "target": 80,
+                            "num_student": 30,
+                            "num_student_met": 22,
+                            "percentage": 73,
+                            "description": "contribute 30-50% with partner"
+                        },
+                        "18-19": {
+                            "target": 73,
+                            "num_student": 60,
+                            "num_student_met": 38,
+                            "percentage": 63,
+                            "description": "contribute 30-50% with partner"
+                        },
+                        "19-20": {
+                            "target": 44,
+                            "num_student": 54,
+                            "num_student_met": 30,
+                            "percentage": 56,
+                            "description": "contribute 30-50% with partner"
+                        },
+                        "20-21": {
+                            "target": 74,
+                            "num_student": 45,
+                            "num_student_met": 29,
+                            "percentage": 64,
+                            "description": "contribute 30-50% with partner"
+                        }
+                    }
+                },
+                "M14": {
+                    "description": "Indirect Measures",
+                    "T1": {
+                        "17-18": {
+                            "target": 70,
+                            "num_student": 28,
+                            "num_student_met": 19,
+                            "percentage": 68,
+                            "description": "good or excellent in improvement"
+                        },
+                        "18-19": {
+                            "target": 70,
+                            "num_student": 21,
+                            "num_student_met": 19,
+                            "percentage": 90,
+                            "description": "good or excellent in improvement"
+                        },
+                        "19-20": {
+                            "target": 70,
+                            "num_student": 32,
+                            "num_student_met": 30,
+                            "percentage": 94,
+                            "description": "good in improvement"
+                        },
+                        "20-21": {
+                            "target": 70,
+                            "num_student": 30,
+                            "num_student_met": 25,
+                            "percentage": 83,
+                            "description": "good or excellent"
+                        }
+                    }
+                }
+            },
+            "S4": {
+                "description": "Understanding Issues in CS",
+                "M11": {
+                    "description": "Review and Describe Issues Related to CS",
+                    "T1": {
+                        "17-18": {
+                            "target": 75,
+                            "num_student": 26,
+                            "num_student_met": 18,
+                            "percentage": 69,
+                            "description": "score 4-5"
+                        },
+                        "18-19": {
+                            "target": 75,
+                            "num_student": 25,
+                            "num_student_met": 20,
+                            "percentage": 80,
+                            "description": "score 4-5"
+                        },
+                        "19-20": {
+                            "target": 70,
+                            "num_student": 26,
+                            "num_student_met": 21,
+                            "percentage": 81,
+                            "description": "score 4-5"
+                        },
+                        "20-21": {
+                            "target": 75,
+                            "num_student": 20,
+                            "num_student_met": 18,
+                            "percentage": 90,
+                            "description": "score 4-5"
+                        }
+                    }
+                },
+                "M12": {
+                    "description": "Compare/Contrast Solutions to CS Issues",
+                    "T1": {
+                        "17-18": {
+                            "target": 75,
+                            "num_student": 22,
+                            "num_student_met": 16,
+                            "percentage": 73,
+                            "description": "score 4-5"
+                        },
+                        "18-19": {
+                            "target": 60,
+                            "num_student": 20,
+                            "num_student_met": 17,
+                            "percentage": 85,
+                            "description": "score 4-5"
+                        },
+                        "19-20": {
+                            "target": 70,
+                            "num_student": 21,
+                            "num_student_met": 17,
+                            "percentage": 81,
+                            "description": "score 4-5"
+                        },
+                        "20-21": {
+                            "target": 60,
+                            "num_student": 22,
+                            "num_student_met": 18,
+                            "percentage": 82,
+                            "description": "score 4-5"
+                        }
+                    }
+                },
+                "M14": {
+                    "description": "Indirect Measures",
+                    "T1": {
+                        "17-18": {
+                            "target": 70,
+                            "num_student": 50,
+                            "num_student_met": 36,
+                            "percentage": 72,
+                            "description": "good or excellent in improvement"
+                        },
+                        "18-19": {
+                            "target": 60,
+                            "num_student": 41,
+                            "num_student_met": 37,
+                            "percentage": 90,
+                            "description": "good or excellent in improvement"
+                        },
+                        "19-20": {
+                            "target": 70,
+                            "num_student": 48,
+                            "num_student_met": 42,
+                            "percentage": 88,
+                            "description": "good or excellent in improvement"
+                        },
+                        "20-21": {
+                            "target": 70,
+                            "num_student": 45,
+                            "num_student_met": 36,
+                            "percentage": 80,
+                            "description": "good or excellent in improvement"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
