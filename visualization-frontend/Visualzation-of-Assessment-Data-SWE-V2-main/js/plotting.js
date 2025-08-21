@@ -1281,7 +1281,7 @@ function generatePlotDataQueryUrl() {
     const currentSelectedStartDate = startDateSelectorElement.options[startDateSelectorElement.selectedIndex].text;
     const currentSelectedEndDate = endDateSelectorElement.options[endDateSelectorElement.selectedIndex].text;
 
-    const url = `http://127.0.0.1:8000/plot?slo=${currentSelectedSlo}&measure=${currentSelectedMeasure}&start_date=${currentSelectedStartDate}&end_date=${currentSelectedEndDate}`;
+            const url = `https://class-assessment-data-visualizer.onrender.com/plot?slo=${currentSelectedSlo}&measure=${currentSelectedMeasure}&start_date=${currentSelectedStartDate}&end_date=${currentSelectedEndDate}`;
 
     return url;
 
@@ -1535,7 +1535,7 @@ plottingModalPlotButton.addEventListener('click', async () => {
         
         window.AppLoader.showLoading('Checking available targets...');
         
-        axios.get(`http://127.0.0.1:8000/target/T2/exist/${currentSelectedSlo}/${currentSelectedMeasure}`).then((response) => {
+        axios.get(`https://class-assessment-data-visualizer.onrender.com/target/T2/exist/${currentSelectedSlo}/${currentSelectedMeasure}`).then((response) => {
             
             const hasBothTargets = response.data;
 

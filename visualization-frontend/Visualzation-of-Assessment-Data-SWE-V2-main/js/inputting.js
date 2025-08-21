@@ -829,7 +829,7 @@ saveButton.addEventListener("click", async () => {
             //POST
             const options = {//keep options here get 
 
-                url: `http://127.0.0.1:8000/input/${currentSloSelectorValue}/${currentMeasureSelectorValue}/${target}/${currentDate}`,
+                url: `https://class-assessment-data-visualizer.onrender.com/input/${currentSloSelectorValue}/${currentMeasureSelectorValue}/${target}/${currentDate}`,
 
                 method: 'POST',
 
@@ -852,7 +852,7 @@ saveButton.addEventListener("click", async () => {
              //PUT
             const options = {
 
-                url:` http://127.0.0.1:8000/edit/${currentSloSelectorValue}/${currentMeasureSelectorValue}/${target}/${currentDate}`,
+                url:` https://class-assessment-data-visualizer.onrender.com/edit/${currentSloSelectorValue}/${currentMeasureSelectorValue}/${target}/${currentDate}`,
                 
                 method: 'PUT',
                 

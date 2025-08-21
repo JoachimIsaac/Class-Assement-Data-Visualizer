@@ -1,7 +1,7 @@
 import {addOptionToSelectorElement,loadSloSelector,loadMeasureSelector,loadSloDescription,loadMeasureDescription} from "/js/plotModal.js"; 
 
 
-const allSloURL = 'http://127.0.0.1:8000/slo/all';
+const allSloURL = 'https://class-assessment-data-visualizer.onrender.com/slo/all';
 
 
 
@@ -203,7 +203,7 @@ modalInputSloSelector.addEventListener('change', () => {
 
     if (selectedSlo != "Choose SLO") {
 
-        let measureUrl = `http://127.0.0.1:8000/measure/${selectedSlo}`;
+        let measureUrl = `https://class-assessment-data-visualizer.onrender.com/measure/${selectedSlo}`;
 
         loadMeasureSelector(measureUrl, modalInputMeasureSelector);
         loadSloDescriptionData(selectedSlo, modalInputSloDescriptionTextBox, modalInputSloDescriptionContainer);
@@ -229,7 +229,7 @@ modalInputMeasureSelector.addEventListener('change',() => {
         
         const currentDate = modalInputAcademicTermTag.textContent;
 
-        let measureUrl = `http://127.0.0.1:8000/input/options/${selectedSlo}/${selectedMeasure}/${currentDate}`;
+        let measureUrl = `https://class-assessment-data-visualizer.onrender.com/input/options/${selectedSlo}/${selectedMeasure}/${currentDate}`;
 
         axios.get(measureUrl).then(response => {
 

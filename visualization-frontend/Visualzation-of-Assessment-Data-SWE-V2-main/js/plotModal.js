@@ -1,6 +1,6 @@
 import {hideUnselectedSelectorError} from '/js/inputting.js';
 
-const allSloURL = 'http://127.0.0.1:8000/slo/all';
+const allSloURL = 'https://class-assessment-data-visualizer.onrender.com/slo/all';
 
 
 ////////////////////////////////Plot Modal Selector Elements////////////////////////
@@ -158,7 +158,7 @@ function loadEndDateSelector(endDatesUrl) {
 //Loads SLO description textbox with the description for a specific SLO.
 function loadSloDescription(selectedSlo,sloDescriptionTextbox,sloDescriptionContainer) {
 
-    let sloDescriptionUrl = `http://127.0.0.1:8000/slo/description/${selectedSlo}`;
+            let sloDescriptionUrl = `https://class-assessment-data-visualizer.onrender.com/slo/description/${selectedSlo}`;
 
     axios.get(sloDescriptionUrl).then(response => { 
 
@@ -181,7 +181,7 @@ function loadSloDescription(selectedSlo,sloDescriptionTextbox,sloDescriptionCont
 //Loads Measure Description textbox with the description of a specific measure.
 function loadMeasureDescription(selectedSlo, selectedMeasure,measureDescriptionTextbox, measureDescriptionContainer) {
     
-    let measureDescriptionUrl = `http://127.0.0.1:8000/measure/description/${selectedSlo}/${selectedMeasure}`;
+            let measureDescriptionUrl = `https://class-assessment-data-visualizer.onrender.com/measure/description/${selectedSlo}/${selectedMeasure}`;
 
     axios.get(measureDescriptionUrl).then(response => {
             
@@ -253,7 +253,7 @@ modalPlotSloSelector.addEventListener('change', () => {
 
     const currentSelectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].textContent;
 
-    const measureUrl = `http://127.0.0.1:8000/measure/${currentSelectedSlo}`;
+            const measureUrl = `https://class-assessment-data-visualizer.onrender.com/measure/${currentSelectedSlo}`;
 
     clearPlotMeasureSelector(modalPlotMeasureSelector);
     clearPlotStartDateSelector(modalPlotStartDateSelector);
@@ -282,7 +282,7 @@ modalPlotMeasureSelector.addEventListener('change', () => {
        
         const currentSelectedSlo = modalPlotSloSelector.options[modalPlotSloSelector.selectedIndex].textContent;
    
-        const startDatesUrl = `http://127.0.0.1:8000/dates/${currentSelectedSlo}/${selectedMeasure}`;
+        const startDatesUrl = `https://class-assessment-data-visualizer.onrender.com/dates/${currentSelectedSlo}/${selectedMeasure}`;
 
         loadStartDateSelector(startDatesUrl);
 
@@ -312,7 +312,7 @@ modalPlotStartDateSelector.addEventListener('change', () => {
 
         const selectedMeasure = modalPlotMeasureSelector.options[modalPlotMeasureSelector.selectedIndex].textContent;
 
-        const endDatesUrl = `http://127.0.0.1:8000/startdate/${currentSelectedSlo}/${selectedMeasure}?start=${selectedStartDate}`;
+        const endDatesUrl = `https://class-assessment-data-visualizer.onrender.com/startdate/${currentSelectedSlo}/${selectedMeasure}?start=${selectedStartDate}`;
 
         
         loadEndDateSelector(endDatesUrl);
